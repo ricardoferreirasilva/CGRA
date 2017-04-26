@@ -217,10 +217,9 @@ LightingScene.prototype.display = function() {
 
     //Submarino
     this.pushMatrix();
-    this.materialDefault.apply();
-    //this.translate(-4,-6,5);
-    this.submarine.display();
-    this.popMatrix();
+    	this.materialDefault.apply();
+   	 	this.submarine.display();
+   	this.popMatrix();
     
     
     // ---- END Primitive drawing section
@@ -231,10 +230,34 @@ LightingScene.prototype.update = function(currTime)
         this.cFrame++;
 
 }
-LightingScene.prototype.doSomething = function ()
+LightingScene.prototype.rotateLeft = function ()
+{ 
+	this.pushMatrix();
+		this.submarine.rotateLeft();
+		this.submarine.display();
+	this.popMatrix();
+};
+
+LightingScene.prototype.rotateRight = function ()
+{ 
+	this.pushMatrix();
+		this.submarine.rotateRight();
+		this.submarine.display();
+	this.popMatrix();
+};
+
+LightingScene.prototype.translateForward = function ()
+{ 
+	this.pushMatrix();
+		this.submarine.translateForward();
+		this.submarine.display();
+	this.popMatrix();
+};
+
+LightingScene.prototype.translateBackwards = function ()
 { 
 	this.pushMatrix();
 		this.submarine.translateBackwards();
 		this.submarine.display();
 	this.popMatrix();
-};*/
+};

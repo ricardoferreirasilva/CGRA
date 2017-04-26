@@ -30,7 +30,10 @@ MyInterface.prototype.init = function(application) {
 	// the identifier 'doSomething' must be a function declared as part of that object (i.e. a member of the scene class)
 	// e.g. LightingScene.prototype.doSomething = function () { console.log("Doing something..."); }; 
 
-	this.gui.add(this.scene, 'doSomething');	
+	this.gui.add(this.scene, 'rotateLeft');	
+	this.gui.add(this.scene, 'rotateRight');	
+	//this.gui.add(this.scene, 'translateForward');	
+	//this.gui.add(this.scene, 'translateBackwards');	
 
 	// add a group of controls (and open/expand by defult)
 	
@@ -67,7 +70,24 @@ MyInterface.prototype.processKeyboard = function(event) {
 	// for better cross-browser support, you may also check suggestions on using event.which in http://www.w3schools.com/jsref/event_key_keycode.asp
 	switch (event.keyCode)
 	{
-		case (65):	// only works for capital 'A', as it is
-			console.log("Key 'A' pressed");
+		case (97):{//a - left
+			console.log("Key 'a' pressed");
+			this.scene.rotateLeft();
+		}
+		break;
+		case (100):{//d - right
+			console.log("Key 'd' pressed");
+			this.scene.rotateRight();
+		}
+		break;
+		case (119):{//w - up
+			console.log("Key 'w' pressed");
+			this.scene.translateForward();
+		}
+		break;
+		case (115):{//s - down
+			console.log("Key 's' pressed");
+		}
+		break;
 	};
 };
