@@ -233,5 +233,8 @@ LightingScene.prototype.update = function(currTime)
 }
 LightingScene.prototype.doSomething = function ()
 { 
-	console.log("Doing something..."); 
-};
+	this.pushMatrix();
+		this.submarine.translateBackwards();
+		this.submarine.display();
+	this.popMatrix();
+};*/
