@@ -25,6 +25,7 @@
  	this.vertices = [];
  	this.indices = [];
  	this.normals = [];
+	 this.texCoords = [];
 
  	var angle=0;
  	
@@ -40,6 +41,7 @@
 
 		for(var a=0; a<= this.stacks; a++){
 			this.vertices.push(x1,y1,z);
+			this.texCoords.push(x1*0.5 + 0.5, 0.5 - y1*0.5,z);
 			this.normals.push(x1,y1,0);
 			z=stackIncrement+z;
 		}

@@ -32,7 +32,7 @@ LightingScene.prototype.init = function(application) {
 
     // Scene elements
     this.floor = new MyQuad(this, 0, 1.5, 0, 1.5);
-    this.cilinder = new MyCylinder(this,8,20);
+    this.cilinder = new MyCylinder(this,20,8);
     this.circle = new MyCircle(this,8);
     this.pointer = new MyPointer(this,1);
     this.clock = new MyClock(this, 12, 1);
@@ -95,6 +95,12 @@ LightingScene.prototype.init = function(application) {
 	this.windowAppearance.setTextureWrap('REPEAT', 'REPEAT');
     this.bottomOceanAppearance.loadTexture("../tp6/fundo_oceano.jpg");
     
+    this.poleTexture=new CGFappearance(this);
+	this.poleTexture.setAmbient(0.1, 0.1, 0.1, 0.1);
+	this.poleTexture.setDiffuse(0.1, 0.1, 0.1, 0.2);
+	this.poleTexture.setSpecular(1, 1, 1, 0.3);
+	this.poleTexture.setShininess(50);
+    this.poleTexture.loadTexture("../tp6/metal2.png");
     
     this.setUpdatePeriod(1/60);
     
@@ -192,22 +198,23 @@ LightingScene.prototype.display = function() {
     this.scale(15, 15, 0.2);
     this.floor.display();
     this.popMatrix();
-    /*
-    //Pointer
-    this.pushMatrix();
-    this.translate(10,0,0);
-    this.pointer.display();
-    this.popMatrix();
-
+    
     //Clock
     this.pushMatrix();
-    this.translate(-7,2,6);
-    this.rotate(90 * degToRad,1, 0, 0);
+    this.translate(8,8,5);
 	this.scale(0.7,0.7,0.3);
     this.clock.display();
     this.popMatrix();
-*/
-    
+
+    //Poste AKA Cylinder
+    this.pushMatrix();
+    this.translate(8,0,5);
+    this.poleTexture.apply();
+    this.rotate(-90 * degToRad,1, 0, 0);
+    this.scale(0.1,0.1,1);
+    this.cilinder.display();
+    this.popMatrix();
+
     //Submarino
     this.pushMatrix();
     this.materialDefault.apply();
