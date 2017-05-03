@@ -30,28 +30,30 @@ MyInterface.prototype.init = function(application) {
 	// the identifier 'doSomething' must be a function declared as part of that object (i.e. a member of the scene class)
 	// e.g. LightingScene.prototype.doSomething = function () { console.log("Doing something..."); }; 
 
-	this.gui.add(this.scene, 'rotateLeft');	
-	this.gui.add(this.scene, 'rotateRight');	
+	//this.gui.add(this.scene, 'rotateLeft');	
+	//this.gui.add(this.scene, 'rotateRight');	
 	//this.gui.add(this.scene, 'translateForward');	
 	//this.gui.add(this.scene, 'translateBackwards');	
 
 	// add a group of controls (and open/expand by defult)
 	
-	var group=this.gui.addFolder("Options");
+	var group=this.gui.addFolder("Luzes");
 	group.open();
 
-	// add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
-	// e.g. this.option1=true; this.option2=false;
-	
-	group.add(this.scene, 'option1');
-	group.add(this.scene, 'option2');
+	// add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean	
+	group.add(this.scene, 'luz0').name('Light 0');
+	group.add(this.scene, 'luz1').name('Light 1');
+	group.add(this.scene, 'luz2').name('Light 2');
+
 	
 	// add a slider
 	// must be a numeric variable of the scene, initialized in scene.init e.g.
 	// this.speed=3;
 	// min and max values can be specified as parameters
 	
-	this.gui.add(this.scene, 'speed', -5, 5);
+	this.gui.add(this.scene, 'speed', -5, 5).name('Speed');
+
+	this.gui.add(this.scene, 'relogio').name('Clock');
 
 	return true;
 };

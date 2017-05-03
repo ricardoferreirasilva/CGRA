@@ -104,9 +104,11 @@ LightingScene.prototype.init = function(application) {
     
     this.setUpdatePeriod(1/60);
     
-    this.option1=true; 
-    this.option2=false; 
+    this.luz0=false
+    this.luz1=false; 
+    this.luz2=false;
     this.speed=3;
+    this.relogio = false;
 
 }; 
 
@@ -115,46 +117,46 @@ LightingScene.prototype.initCameras = function() {
 };
 
 LightingScene.prototype.initLights = function() {
-    //this.setGlobalAmbientLight(0.5, 0.5,0.5, 1.0);
+    //this.setGlobalAmbientLight(0.5, 0.5, 0.5, 1.0);
 
     // Positions for four lights
     this.lights[0].setPosition(4, 6, 1, 1);
     this.lights[0].setVisible(true);
-    this.lights[0].setAmbient(1, 1, 1, 1);
-    this.lights[0].setDiffuse(0, 0, 1, 1.0);
+    this.lights[0].setAmbient(0, 0, 0, 1);
+    this.lights[0].setDiffuse(1, 1, 0, 1.0);
     this.lights[0].enable();
-    
-    /*
+
     this.lights[1].setPosition(10.5, 6.0, 1.0, 1.0);
     this.lights[1].setVisible(true); // show marker on light position (different from enabled)
-
-    this.lights[2].setPosition(10.5, 6.0, 5, 1.0);
-    this.lights[2].setVisible(true);
-
-    //this.lights[2].setPosition(10.5, 6.0, 5.0, 1.0);
-    //this.lights[1].setVisible(true); // show marker on light position (different from enabled)
-    //this.lights[3].setPosition(4, 6.0, 5.0, 1.0);
-    //this.lights[1].setVisible(true); // show marker on light position (different from enabled)
-
-   
-
-    this.lights[1].setAmbient(0, 0, 0, 1);
+ 	this.lights[1].setAmbient(0, 0, 0, 1);
     this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
     this.lights[1].enable();
 
+    this.lights[2].setPosition(10.5, 6.0, 5, 1.0);
+    this.lights[2].setVisible(true);
     this.lights[2].setAmbient(0, 0, 0, 1);
     this.lights[2].setDiffuse(1.0, 1.0, 1.0, 1.0);
     this.lights[2].setSpecular(1, 1, 1, 1);
-
     this.lights[2].setConstantAttenuation(0);
     this.lights[2].setLinearAttenuation(0)
     this.lights[2].setQuadraticAttenuation(0.2)
-    this.lights[2].enable();*/
+    this.lights[2].enable();
 };
 
 LightingScene.prototype.updateLights = function() {
     for (i = 0; i < this.lights.length; i++)
         this.lights[i].update();
+        if(this.luz0) 
+        	this.lights[0].enable();
+        else this.lights[0].disable(); 
+
+        if(this.luz1) 
+        	this.lights[1].enable();
+        else this.lights[1].disable(); 
+
+        if(this.luz2) 
+        	this.lights[2].enable();
+        else this.lights[2].disable(); 
 }
 
 LightingScene.prototype.display = function() {
@@ -201,14 +203,14 @@ LightingScene.prototype.display = function() {
     
     //Clock
     this.pushMatrix();
-    this.translate(8,8,5);
+    this.translate(8,8,0);
 	this.scale(0.7,0.7,0.3);
     this.clock.display();
     this.popMatrix();
 
     //Poste AKA Cylinder
     this.pushMatrix();
-    this.translate(8,0,5);
+    this.translate(8,0,0);
     this.poleTexture.apply();
     this.rotate(-90 * degToRad,1, 0, 0);
     this.scale(0.1,0.1,1);
@@ -218,6 +220,7 @@ LightingScene.prototype.display = function() {
     //Submarino
     this.pushMatrix();
     	this.materialDefault.apply();
+    	this.rotate(90 * degToRad,0, 1, 0);
    	 	this.submarine.display();
    	this.popMatrix();
     
@@ -226,9 +229,10 @@ LightingScene.prototype.display = function() {
 }
 LightingScene.prototype.update = function(currTime)
 {
+	if(this.relogio){
 		this.clock.update(currTime);
         this.cFrame++;
-
+	}
 }
 LightingScene.prototype.rotateLeft = function ()
 { 
