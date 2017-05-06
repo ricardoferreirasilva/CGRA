@@ -14,6 +14,8 @@ function MySubmarine(scene) {
     this.cylinder= new MyCylinder(scene,20,1);
     this.cube = new MyUnitCubeQuad(scene);
     this.circle = new MyCircle(scene, 20);
+    this.flipper= new MyFlipper(scene);
+    
     this.triangle.initBuffers();
 };
 
@@ -29,6 +31,14 @@ MySubmarine.prototype.display = function() {
 	this.scene.pushMatrix();
 		this.scene.translate(0,0,0.5*0.92);
 		this.scene.scale(0.73,1,1);
+		
+		 //Flipper testing
+	    this.scene.pushMatrix();
+	    	//this.scene.translate();
+	    	//this.scene.rotate(90 * degToRad,0, 1, 0);
+		 	this.flipper.display();
+		this.scene.popMatrix();
+		
 		//Back Hemisphere
 		this.scene.pushMatrix();
 			this.scene.scale(0.5*0.92,0.5*0.92,0.5*0.92);
