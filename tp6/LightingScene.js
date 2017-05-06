@@ -37,6 +37,7 @@ LightingScene.prototype.init = function(application) {
     this.pointer = new MyPointer(this,1);
     this.clock = new MyClock(this, 12, 1);
     this.submarine = new MySubmarine(this);
+    this.flipper= new MyFlipper(this);
 
     // Materials
     this.materialDefault = new CGFappearance(this);
@@ -191,7 +192,7 @@ LightingScene.prototype.display = function() {
 
 
     // ---- BEGIN Primitive drawing section
-
+    /*
     // Floor
     this.bottomOceanAppearance.apply();  
     this.pushMatrix();
@@ -218,11 +219,19 @@ LightingScene.prototype.display = function() {
     this.popMatrix();
 
     //Submarino
+    
     this.pushMatrix();
     	this.materialDefault.apply();
     	this.rotate(90 * degToRad,0, 1, 0);
    	 	this.submarine.display();
    	this.popMatrix();
+    */
+    
+    //Flipper testing
+    this.pushMatrix();
+		this.materialDefault.apply();
+	 	this.flipper.display();
+	this.popMatrix();
     
     
     // ---- END Primitive drawing section

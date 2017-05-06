@@ -73,7 +73,28 @@ MySubmarine.prototype.display = function() {
 		this.scene.popMatrix();	
 	this.scene.popMatrix();
 	
-	
+	//Periscope
+	this.scene.pushMatrix();
+		this.scene.scale(0.05,0.05,0.5);
+		this.scene.translate(0,26.65,7.5);
+		this.scene.pushMatrix();
+			this.scene.translate(0,-0.20,-0.1);
+			this.scene.scale(1,1,0.45);
+			this.cylinder.display();
+			this.scene.pushMatrix();
+				this.scene.translate(0,0,1);
+				this.circle.display();
+			this.scene.popMatrix();
+			this.scene.rotate(180 * degToRad,1, 0,0);
+			this.circle.display();
+		this.scene.popMatrix();
+			
+		this.scene.pushMatrix();
+			this.scene.scale(1,6,0.1);
+			this.scene.rotate(90 * degToRad,1, 0,0);
+			this.cylinder.display();
+		this.scene.popMatrix();	
+	this.scene.popMatrix();	
 	/*
 	this.scene.pushMatrix();
 		this.cube.display();
