@@ -89,6 +89,7 @@ MyInterface.prototype.processKeyboard = function(event) {
 		break;
 		case (115):{//s - down
 			console.log("Key 's' pressed");
+			this.scene.translateBackwards();
 		}
 		break;
 	};

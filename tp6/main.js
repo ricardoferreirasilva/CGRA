@@ -18,6 +18,7 @@ serialInclude([
 	'MyInterface.js',
 	'MyTriangle.js',
 	'MySubmarine.js',
+	'MyHemiSphere.js',
 
 	main=function() {
 		var app = new CGFapplication(document.body);

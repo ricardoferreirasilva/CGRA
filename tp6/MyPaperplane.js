@@ -21,16 +21,16 @@ MyPaperplane.prototype.display = function() {
 	this.scene.translate(-12, 6, -6);
 	this.scene.rotate(-90 * degToRad,0,0, 1);
 	this.scene.translate(14, 5, -4);
-    //corpo
+    
+	//corpo
 	this.scene.pushMatrix();
-    this.scene.translate(-2, -6, 6);
-    this.scene.scale(0.05, 3, 0.5);
-    this.cube.display();
+		this.scene.translate(-2, -6, 6);
+    	this.scene.scale(0.05, 3, 0.5);
+    	this.cube.display();
     this.scene.popMatrix();
 
     //asa de cima
     this.scene.pushMatrix();
-
     this.scene.translate(-2, -6.5, 6.25);
     this.scene.rotate(-90 * degToRad,0, 1, 0);
     this.scene.rotate(90 * degToRad,1, 0, 0);
