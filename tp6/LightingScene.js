@@ -113,7 +113,7 @@ LightingScene.prototype.init = function(application) {
     this.submarineAppearances=[];
     this.submarineAppearances[0]=this.materialDefault;
     this.submarineAppearances[1]=this.floorAppearance;
-    this.submarineAppearances[1]=this.metalAppearence;
+    this.submarineAppearances[2]=this.metalAppearence;
     
     this.currSubmarineAppearance=0; // indica o indice da textura atual do submarino
     this.submarineAppearanceList= ['standard','wood', 'metal'];
@@ -260,7 +260,7 @@ LightingScene.prototype.update = function(currTime)
         this.currSubmarineAppearance = 1;
         break;
     case "metal":
-        this.currSubmarineAppearance = 1;
+        this.currSubmarineAppearance = 2;
         break;
     }
 }
