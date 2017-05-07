@@ -34,28 +34,36 @@ function MyClock(scene, slices,stacks) {
 
  MyClock.prototype.display = function() {
 	this.scene.pushMatrix();
-	this.cylinder.display();
+		this.scene.materialDefault.apply();
+		this.cylinder.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
-	this.scene.translate(0,0,1);
-	this.clockTexture.apply();
-	this.tampo.display();
+		this.scene.translate(0,0,1);
+		this.clockTexture.apply();
+		this.tampo.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
-	this.scene.translate(0,0,1);
-	this.secondPointer.display();
+		this.scene.translate(0,0,0);
+		this.scene.materialDefault.apply();
+		this.scene.rotate(180 * degToRad,0, 1, 0);
+		this.tampo.display();
+	this.scene.popMatrix();
+	
+	this.scene.pushMatrix();
+		this.scene.translate(0,0,1);
+		this.secondPointer.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
-	this.scene.translate(0,0,1);
-	this.minutePointer.display();
+		this.scene.translate(0,0,1);
+		this.minutePointer.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
-	this.scene.translate(0,0,1);
-	this.hourPointer.display();
+		this.scene.translate(0,0,1);
+		this.hourPointer.display();
 	this.scene.popMatrix();
  };
 

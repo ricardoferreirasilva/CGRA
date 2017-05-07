@@ -37,7 +37,6 @@ LightingScene.prototype.init = function(application) {
     this.pointer = new MyPointer(this,1);
     this.clock = new MyClock(this, 12, 1);
     this.submarine = new MySubmarine(this);
-    this.flipper= new MyFlipper(this);
 
     // Materials
     this.materialDefault = new CGFappearance(this);
@@ -103,6 +102,23 @@ LightingScene.prototype.init = function(application) {
 	this.poleTexture.setShininess(50);
     this.poleTexture.loadTexture("../tp6/metal2.png");
     
+    this.metalAppearence= new CGFappearance(this);
+    this.metalAppearence.setAmbient(1, 1, 1, 0.1);
+	this.metalAppearence.setDiffuse(0.1, 0.1, 0.1, 0.2);
+	this.metalAppearence.setSpecular(1, 1, 1, 0.3);
+	this.metalAppearence.setShininess(50);
+	this.metalAppearence.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+    this.metalAppearence.loadTexture("../tp6/metal.png");
+    
+    this.submarineAppearances=[];
+    this.submarineAppearances[0]=this.materialDefault;
+    this.submarineAppearances[1]=this.floorAppearance;
+    this.submarineAppearances[1]=this.metalAppearence;
+    
+    this.currSubmarineAppearance=0; // indica o indice da textura atual do submarino
+    this.submarineAppearanceList= ['standard','wood', 'metal'];
+    
+    this.submarineAppearance = this.materialDefault;
     this.setUpdatePeriod(1/60);
     
     this.luz0=false
@@ -192,7 +208,7 @@ LightingScene.prototype.display = function() {
 
 
     // ---- BEGIN Primitive drawing section
-    /*
+    
     // Floor
     this.bottomOceanAppearance.apply();  
     this.pushMatrix();
@@ -204,7 +220,7 @@ LightingScene.prototype.display = function() {
     
     //Clock
     this.pushMatrix();
-    this.translate(8,8,0);
+    this.translate(8,8,-0.15);
 	this.scale(0.7,0.7,0.3);
     this.clock.display();
     this.popMatrix();
@@ -212,7 +228,6 @@ LightingScene.prototype.display = function() {
     //Poste AKA Cylinder
     this.pushMatrix();
     this.translate(8,0,0);
-    this.poleTexture.apply();
     this.rotate(-90 * degToRad,1, 0, 0);
     this.scale(0.1,0.1,1);
     this.cilinder.display();
@@ -225,23 +240,29 @@ LightingScene.prototype.display = function() {
     	this.rotate(90 * degToRad,0, 1, 0);
    	 	this.submarine.display();
    	this.popMatrix();
-    */
-    
-    //Flipper testing
-    this.pushMatrix();
-		this.materialDefault.apply();
-	 	this.flipper.display();
-	this.popMatrix();
-    
     
     // ---- END Primitive drawing section
 }
 LightingScene.prototype.update = function(currTime)
 {
+	//Clock Update
 	if(this.relogio){
 		this.clock.update(currTime);
         this.cFrame++;
 	}
+	
+	//GUI Appearance choice    
+    switch (this.submarineAppearance) {
+    case "standard":
+        this.currSubmarineAppearance = 0;
+        break;
+    case "wood":
+        this.currSubmarineAppearance = 1;
+        break;
+    case "metal":
+        this.currSubmarineAppearance = 1;
+        break;
+    }
 }
 LightingScene.prototype.rotateLeft = function ()
 { 

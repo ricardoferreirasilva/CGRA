@@ -8,7 +8,7 @@ function MyTriangle2(scene) {
 };
 
 MyTriangle2.prototype = Object.create(CGFobject.prototype);
-MyTriangle2.prototype.constructor = MyTriangle;
+MyTriangle2.prototype.constructor = MyTriangle2;
 MyTriangle2.prototype.initBuffers = function() {
     this.vertices = [
     	0,0,0,
@@ -17,20 +17,20 @@ MyTriangle2.prototype.initBuffers = function() {
     ];
 
     this.indices = [
-        0,1,2,
-        1,0,2
+        2,1,0
     ];
 
     this.normals = [
-        0, 0, 1,
-        0, 0, 1,
-        0, 0, 1
+       0, 1,0,
+       0, 1,0,
+       0,1 ,0
     ];
     
     this.texCoords = [
-    0,1,
-    1,0,
-    0,0
+    	0,0,
+    	1,0,
+    	0,1
+    
     	
     ];
     
