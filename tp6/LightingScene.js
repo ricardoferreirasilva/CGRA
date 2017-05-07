@@ -252,7 +252,7 @@ LightingScene.prototype.update = function(currTime)
         this.cFrame++;
 	}
 	
-	//this.submarine.update(currTime);
+	this.submarine.update(currTime);
 	
 	//GUI Appearance choice    
     switch (this.submarineAppearance) {
@@ -267,34 +267,3 @@ LightingScene.prototype.update = function(currTime)
         break;
     }
 }
-LightingScene.prototype.rotateLeft = function ()
-{ 
-	this.pushMatrix();
-		this.submarine.rotateLeft();
-		this.submarine.display();
-	this.popMatrix();
-};
-
-LightingScene.prototype.rotateRight = function ()
-{ 
-	this.pushMatrix();
-		this.submarine.rotateRight();
-		this.submarine.display();
-	this.popMatrix();
-};
-
-LightingScene.prototype.translateForward = function ()
-{ 
-	this.pushMatrix();
-		this.submarine.translateForward();
-		this.submarine.display();
-	this.popMatrix();
-};
-
-LightingScene.prototype.translateBackwards = function ()
-{ 
-	this.pushMatrix();
-		this.submarine.translateBackwards();
-		this.submarine.display();
-	this.popMatrix();
-};

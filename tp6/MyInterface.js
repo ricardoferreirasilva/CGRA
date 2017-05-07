@@ -64,6 +64,7 @@ MyInterface.prototype.init = function(application) {
  * processKeyboard
  * @param event {Event}
  */
+
 MyInterface.prototype.processKeyboard = function(event) {
 	// call CGFinterface default code (omit if you want to override)
 	CGFinterface.prototype.processKeyboard.call(this,event);
@@ -72,7 +73,8 @@ MyInterface.prototype.processKeyboard = function(event) {
 	// or use String.fromCharCode(event.keyCode) to compare chars
 	
 	// for better cross-browser support, you may also check suggestions on using event.which in http://www.w3schools.com/jsref/event_key_keycode.asp
-	switch (event.keyCode)
+	
+	/*switch (event.keyCode)
 	{
 		case (97):{//a - left
 			console.log("Key 'a' pressed");
@@ -94,5 +96,60 @@ MyInterface.prototype.processKeyboard = function(event) {
 			this.scene.translateBackwards();
 		}
 		break;
+	};*/
+};
+
+MyInterface.prototype.processKeyDown = function(event) {
+	switch (event.which || event.keyCode)
+	{
+		case (97)://a - left
+			this.scene.submarine.switchDirection('left');
+			break;
+		case (100)://d - right
+			this.scene.submarine.switchDirection('right');
+			break;
+		case (119)://w - forward
+			this.scene.submarine.switchDirection('forward');
+			break;
+		case (115)://s - back
+			this.scene.submarine.switchDirection('back');
+			break;
+		case (113)://Q subir
+			this.scene.submarine.switchDirection('up');
+			break;
+		case (101)://E descer
+			this.scene.submarine.switchDirection('down');
+			break;
 	};
 };
+
+/**
+ * processKeyUp
+ * @param event {Event}
+ */
+
+MyInterface.prototype.processKeyUp = function(event) {
+	
+	switch (event.which || event.keyCode)
+	{
+	case (97)://a - left
+		this.scene.submarine.stopMoving('left');
+		break;
+	case (100)://d - right
+		this.scene.submarine.stopMoving('right');
+		break;
+	case (119)://w - forward
+		this.scene.submarine.stopMoving('forward');
+		break;
+	case (115)://s - back
+		this.scene.submarine.stopMoving('back');
+		break;
+	case (113)://Q subir
+		this.scene.submarine.stopMoving('up');
+		break;
+	case (101)://E descer
+		this.scene.submarine.stopMoving('down');
+		break;
+	};
+};
+

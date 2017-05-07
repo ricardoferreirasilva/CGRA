@@ -8,13 +8,15 @@ function MySubmarine(scene) {
     this.angle=0;
     this.x=0;
     this.z=0;
+    this.y=0;
     this.r=2;
     this.flipperAngle=0;
     this.rightProppellerAngle=0;
     this.leftProppellerAngle=0;
+    this.accel=0;
     
     this.movingForward=false;
-    this.movingBackwards=false;
+    this.movingBack=false;
     this.movingUp=false;
     this.movingDown=false;
     this.movingRight=false;
@@ -37,7 +39,7 @@ MySubmarine.prototype.display = function() {
 	
 	this.scene.submarineAppearances[this.scene.currSubmarineAppearance].apply();
 	
-	this.scene.translate(this.x,0,this.z);
+	this.scene.translate(this.x,this.y,this.z);
 	this.scene.rotate(this.angle,0, 1, 0);
 		
 	//Submarine Display
@@ -148,57 +150,112 @@ MySubmarine.prototype.display = function() {
  	
 };//rgb - xyz
 
-MySubmarine.prototype.rotateLeft = function() {
-	this.angle+=5* degToRad;
+MySubmarine.prototype.switchDirection = function(direction) {
+	switch(direction){
+	case 'left':{
+		if (this.movingLeft != true)
+			this.movingLeft=true;
+	}
+	break;
+	case 'right':{
+		if (this.movingRight != true)
+			this.movingRight=true;
+	}
+	break;
+	case 'forward':{
+		if (this.movingForward != true)
+			this.movingForward=true;
+	}
+	break;
+	
+	case 'back':{
+		if (this.movingBack != true)
+			this.movingBack=true;
+	}
+	break;
+	
+	case 'up':{
+		if (this.movingUp != true)
+			this.movingUp=true;
+	}
+	break;
+	
+	case 'down':{
+		if (this.movingDown != true) 
+			this.movingDown=true;
+	}
+	break;
+	
+	
+	}
 
-this.primitiveType = this.scene.gl.TRIANGLES;
 };
 
-MySubmarine.prototype.rotateRight = function() {
-	this.angle-=5* degToRad;
+MySubmarine.prototype.stopMoving = function(direction) {
+	switch(direction){
+	case 'left':{
+		if (this.movingLeft != false) 
+			this.movingLeft=false;
+	}
+	break;
+	case 'right':{
+		if (this.movingRight != false) 
+			this.movingRight=false;
+	}
+	break;
 	
-this.primitiveType = this.scene.gl.TRIANGLES;
+	case 'forward':{
+		if (this.movingForward != false) 
+			this.movingForward=false;
+	}
+	break;
+	
+	case 'back':{
+		if (this.movingBack != false) 
+			this.movingBack=false;
+	}
+	break;
+	
+	case 'up':{
+		if (this.movingUp != false) 
+			this.movingUp=false;
+	}
+	break;
+	
+	case 'down':{
+		if (this.movingDown != false) 
+			this.movingDown=false;
+	}
+	break;
+
+	};
 };
 
-MySubmarine.prototype.translateForward = function() {
-	this.z += (this.r*Math.cos(this.angle));
-	this.x += (this.r*Math.sin(this.angle));
-	
-this.primitiveType = this.scene.gl.TRIANGLES;
-};
-
-MySubmarine.prototype.translateBackwards= function() {
-	this.z -= (this.r*Math.cos(this.angle));
-	this.x -= (this.r*Math.sin(this.angle));
-	
-this.primitiveType = this.scene.gl.TRIANGLES;
-};
-
-MySubmarine.prototype.update = function(temp){
-	
-		var dt = temp - this.previousInstant;
-	    this.previousInstant = temp;
+MySubmarine.prototype.update = function(dt){
 	    
-		this.z += (this.Math.cos(this.angle)*dt*this.scene.speed);
-		this.x += (this.Math.sin(this.angle)*dt*this.scene.speed);
-	/*
+		this.z += Math.cos(this.angle * degToRad) * this.accel * dt;
+		this.x += Math.sin(this.angle * degToRad) * this.accel * dt;
+	
 	 if(this.movingForward){
-		 
+		 this.accel+=0.0002;
 	 }
-	 else if(this.movingBackwards){
-		 
+	 else if(this.movingBack){
+		 this.accel-=0.0002;
 	 }
-	 else if(this.movingUp){
+	 /*
+	 if(this.movingUp){
 		 
 	 }
 	 else if(this.movingDown){
 		 
 	 }
-	 else if(this.movingRight){
+	 
+	 if(this.movingRight){
 		 
 	 }
-	 else if(this.movingLeft){
+	 if(this.movingLeft){
 		 
 	 }
-	*/
+	 */
 };
+
