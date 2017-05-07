@@ -8,10 +8,18 @@ function MySubmarine(scene) {
     this.angle=0;
     this.x=0;
     this.z=0;
-    this.r=1;
+    this.r=2;
     this.flipperAngle=0;
     this.rightProppellerAngle=0;
     this.leftProppellerAngle=0;
+    
+    this.movingForward=false;
+    this.movingBackwards=false;
+    this.movingUp=false;
+    this.movingDown=false;
+    this.movingRight=false;
+    this.movingLeft=false
+    
     this.triangle= new MyTriangle(scene);
     this.hemisphere= new MyHemiSphere(scene,20,8);
     this.cylinder= new MyCylinder(scene,20,1);
@@ -164,4 +172,33 @@ MySubmarine.prototype.translateBackwards= function() {
 	this.x -= (this.r*Math.sin(this.angle));
 	
 this.primitiveType = this.scene.gl.TRIANGLES;
+};
+
+MySubmarine.prototype.update = function(temp){
+	
+		var dt = temp - this.previousInstant;
+	    this.previousInstant = temp;
+	    
+		this.z += (this.Math.cos(this.angle)*dt*this.scene.speed);
+		this.x += (this.Math.sin(this.angle)*dt*this.scene.speed);
+	/*
+	 if(this.movingForward){
+		 
+	 }
+	 else if(this.movingBackwards){
+		 
+	 }
+	 else if(this.movingUp){
+		 
+	 }
+	 else if(this.movingDown){
+		 
+	 }
+	 else if(this.movingRight){
+		 
+	 }
+	 else if(this.movingLeft){
+		 
+	 }
+	*/
 };

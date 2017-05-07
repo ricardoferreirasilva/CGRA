@@ -109,7 +109,8 @@ LightingScene.prototype.init = function(application) {
 	this.metalAppearence.setShininess(50);
 	this.metalAppearence.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
     this.metalAppearence.loadTexture("../tp6/metal.png");
-    
+     
+    this.submarineAppearance = this.materialDefault;
     this.submarineAppearances=[];
     this.submarineAppearances[0]=this.materialDefault;
     this.submarineAppearances[1]=this.floorAppearance;
@@ -118,7 +119,7 @@ LightingScene.prototype.init = function(application) {
     this.currSubmarineAppearance=0; // indica o indice da textura atual do submarino
     this.submarineAppearanceList= ['standard','wood', 'metal'];
     
-    this.submarineAppearance = this.materialDefault;
+   
     this.setUpdatePeriod(1/60);
     
     this.luz0=false
@@ -220,16 +221,16 @@ LightingScene.prototype.display = function() {
     
     //Clock
     this.pushMatrix();
-    this.translate(8,8,-0.15);
+    this.translate(8,5,0);
 	this.scale(0.7,0.7,0.3);
     this.clock.display();
     this.popMatrix();
 
     //Poste AKA Cylinder
     this.pushMatrix();
-    this.translate(8,0,0);
+    this.translate(8,0,0.15);
     this.rotate(-90 * degToRad,1, 0, 0);
-    this.scale(0.1,0.1,1);
+    this.scale(0.1,0.1,4.5);
     this.cilinder.display();
     this.popMatrix();
 
@@ -250,6 +251,8 @@ LightingScene.prototype.update = function(currTime)
 		this.clock.update(currTime);
         this.cFrame++;
 	}
+	
+	//this.submarine.update(currTime);
 	
 	//GUI Appearance choice    
     switch (this.submarineAppearance) {

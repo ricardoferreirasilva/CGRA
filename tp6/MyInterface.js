@@ -46,7 +46,7 @@ MyInterface.prototype.init = function(application) {
 	group.add(this.scene, 'luz2').name('Light 2');
 
 	//Texture drop Down box
-	this.gui.add(this.scene, 'submarineAppearance', this.scene.submarineAppearanceList );
+	this.gui.add(this.scene, 'submarineAppearance', this.scene.submarineAppearanceList ).name('Textures');
 	
 	// add a slider
 	// must be a numeric variable of the scene, initialized in scene.init e.g.
