@@ -97,28 +97,34 @@ MyInterface.prototype.processKeyboard = function(event) {
 		}
 		break;
 	};*/
-};
+}
 
 MyInterface.prototype.processKeyDown = function(event) {
 	switch (event.which || event.keyCode)
 	{
-		case (97)://a - left
+		case (97 || 65)://a - left
 			this.scene.submarine.switchDirection('left');
 			break;
-		case (100)://d - right
+		case (100 || 68)://d - right
 			this.scene.submarine.switchDirection('right');
 			break;
-		case (119)://w - forward
+		case (119 || 87)://w - forward
 			this.scene.submarine.switchDirection('forward');
 			break;
-		case (115)://s - back
+		case (115 || 83)://s - back
 			this.scene.submarine.switchDirection('back');
 			break;
-		case (113)://Q subir
+		case (113 || 81)://Q subir
 			this.scene.submarine.switchDirection('up');
 			break;
-		case (101)://E descer
+		case (101 || 69)://E descer
 			this.scene.submarine.switchDirection('down');
+			break;
+		case(80 || 112)://p subir periscopio
+			this.scene.submarine.periscopeUp();
+			break;
+		case(76 || 108)://l descer periscopio
+			this.scene.submarine.periscopeDown();
 			break;
 	};
 };
