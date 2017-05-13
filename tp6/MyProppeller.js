@@ -6,7 +6,7 @@
 function MyProppeller(scene) {
     CGFobject.call(this, scene);
     
-    this.angle=25;
+    this.angle=0;
     
     this.hemisphere= new MyHemiSphere(scene,20,8);
     this.cylinder= new MyCylinder(scene,20,1);
@@ -42,7 +42,12 @@ MyProppeller.prototype.display = function() {
 	 
 };
 
-MyProppeller.prototype.setAngle = function(newAngle){
-	angle= newAngle;
+MyProppeller.prototype.incAngle = function(newAngle){
+	this.angle= newAngle;
+	
+};
+
+MyProppeller.prototype.decAngle = function(newAngle){
+	this.angle= newAngle;
 	
 };

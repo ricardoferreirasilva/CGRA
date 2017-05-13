@@ -60,15 +60,8 @@ MyInterface.prototype.init = function(application) {
 	return true;
 };
 
-MyInterface.prototype.processKeyboard = function(event) {
-	// call CGFinterface default code (omit if you want to override)
-	CGFinterface.prototype.processKeyboard.call(this,event);
-	
-	// Check key codes e.g. here: http://www.asciitable.com/
-	// or use String.fromCharCode(event.keyCode) to compare chars
-	
-	// for better cross-browser support, you may also check suggestions on using event.which in http://www.w3schools.com/jsref/event_key_keycode.asp
-	
+MyInterface.prototype.processKeyDown = function(event) {
+	CGFinterface.prototype.processKeyDown.call(this,event);
 	switch (event.keyCode)
 	{
 		case (97)://a - left
@@ -120,6 +113,53 @@ MyInterface.prototype.processKeyboard = function(event) {
 			this.scene.submarine.periscopeDown();
 			break;
 	};
-}
+};
 
+/**
+ * processKeyUp
+ * @param event {Event}
+ */
+/*
+MyInterface.prototype.processKeyUp = function(event) {
+	CGFinterface.prototype.processKeyUp.call(this, event);
+	switch (event.keyCode)
+	{
+	case (97)://a - left
+		this.scene.submarine.stopMoving('left');
+		break;
+	case (65)://a - left
+		this.scene.submarine.stopMoving('left');
+		break;
+	case (100)://d - right
+		this.scene.submarine.stopMoving('right');
+		break;
+	case (68)://d - right
+		this.scene.submarine.stopMoving('right');
+		break;
+	case (119)://w - forward
+		this.scene.submarine.constMove('forward');
+		break;
+	case (87)://w - forward
+		this.scene.submarine.constMove('forward');
+		break;
+	case (115)://s - back
+		this.scene.submarine.constMove('back');
+		break;
+	case (83)://s - back
+		this.scene.submarine.constMove('back');
+		break;
+	case (113)://Q subir
+		this.scene.submarine.constMove('up');
+		break;
+	case (81)://Q subir
+		this.scene.submarine.constMove('up');
+		break;
+	case (101)://E descer
+		this.scene.submarine.constMove('down');
+		break;
+	case (69)://E descer
+		this.scene.submarine.constMove('down');
+		break;
+	};
+};*/
 

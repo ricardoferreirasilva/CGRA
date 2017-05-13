@@ -11,10 +11,15 @@ function MySubmarine(scene) {
     this.y=0;
     this.r=2;
     this.flipperAngle=0;
+    
+    //proppellers
     this.rightProppellerAngle=0;
     this.leftProppellerAngle=0;
-    this.speed=0;
-    this.accel=0.0005;
+    this.minPropAngle=0.1;
+    
+    this.speed=0.00;
+    this.minSpeed=1;
+    this.accel=0.05;
     
     this.movingForward=false;
     this.movingBack=false;
@@ -138,13 +143,13 @@ MySubmarine.prototype.display = function() {
  		this.scene.translate(-0.425,-0.4,0.5);
  		this.scene.scale(0.5*0.4,0.5*0.4,0.22);
  		this.scene.pushMatrix();
- 			this.proppeller.setAngle(this.rightProppellerAngle);
+ 			this.proppeller.decAngle(this.rightProppellerAngle);
  			this.proppeller.display();
  		this.scene.popMatrix();
  	//Left Proppeller
  		this.scene.translate(4.3,0,0);
  		this.scene.pushMatrix();
-			this.proppeller.setAngle(this.leftProppellerAngle);
+			this.proppeller.incAngle(this.leftProppellerAngle);
 			this.proppeller.display();
 		this.scene.popMatrix();
  	this.scene.popMatrix();
@@ -164,20 +169,29 @@ MySubmarine.prototype.switchDirection = function(direction) {
 	}
 	break;
 	case 'forward':{
-		
-		if (!this.movingForward){
+		if(this.speed==0){
+			this.speed+=this.minSpeed;
+		}else {
+			this.speed+=this.accel;
+		}
+		 
+		 console.log(this.speed);
+		/*if (!this.movingForward){
 			this.movingForward=true;
 			this.movingBack=false;
-		}
+		}*/
 			
 	}
 	break;
 	
 	case 'back':{
+		 this.speed-=this.accel;
+		 console.log(this.speed);
+		 /*
 		if (this.movingBack != true){
 			this.movingBack=true;
 			this.movingForward=false;
-		}
+		}*/
 	}
 	break;
 	
@@ -199,39 +213,26 @@ MySubmarine.prototype.switchDirection = function(direction) {
 };
 
 MySubmarine.prototype.update = function(currTime){
-	  /*this.deltaTime = this.deltaTime || 0;
-	    this.deltaTime = currTime - this.lastTime;
-	    this.lastTime = currTime;
-	    var perSecond = (this.deltaTime / (1000));*/
-	this.z += Math.cos(this.angle * degToRad) * this.speed;
-	this.x += Math.sin(this.angle * degToRad) * this.speed;
+	this.lastime = this.lastime || currTime;
+ 	var dt = currTime - this.lastime;
+	this.lastime = currTime;
+	var minPropAngle=(dt/1000)*360 * degToRad;
+	this.z += Math.cos(this.angle * degToRad) * this.speed*dt/1000;
+	this.x += Math.sin(this.angle * degToRad) * this.speed*dt/1000;
 	 
-		
-	 if(this.movingForward){
-		 this.speed+=this.accel;
-	 }
+	if(this.speed==0){
+		this.rightProppellerAngle=0;
+		this.leftProppellerAngle=0;
+	}
+	else if(this.speed <=this.minSpeed && this.speed>0){
+		this.rightProppellerAngle+= this.minPropAngle;
+		this.leftProppellerAngle-= this.minPropAngle;
+	}
+	else {
+		this.rightProppellerAngle+=this.minPropAngle*this.speed*360 * degToRad;
+		this.leftProppellerAngle-=this.minPropAngle*this.speed*360 * degToRad;
+	}
 	 
-	 else if(this.movingBack){
-		 this.speed-=this.accel;
-	 }
-	
-	 
-	 
-	 /*
-	 if(this.movingUp){
-		 
-	 }
-	 else if(this.movingDown){
-		 
-	 }
-	 
-	 if(this.movingRight){
-		 
-	 }
-	 if(this.movingLeft){
-		 
-	 }
-	 */
 };
 
 MySubmarine.prototype.periscopeUp = function(){
