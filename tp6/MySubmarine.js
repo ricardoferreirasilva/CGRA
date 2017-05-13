@@ -21,12 +21,8 @@ function MySubmarine(scene) {
     this.minSpeed=1;
     this.accel=0.05;
     
-    this.movingForward=false;
-    this.movingBack=false;
-    this.movingUp=false;
-    this.movingDown=false;
-    this.movingRight=false;
-    this.movingLeft=false
+    this.rotateLeft=false;
+	this.rotateRight=false;
     
     this.triangle= new MyTriangle(scene);
     this.hemisphere= new MyHemiSphere(scene,20,8);
@@ -159,13 +155,18 @@ MySubmarine.prototype.display = function() {
 MySubmarine.prototype.switchDirection = function(direction) {
 	switch(direction){
 	case 'left':{
-		if (this.movingLeft != true)
-			this.movingLeft=true;
+		if(!this.rotateLeft){
+			this.rotateLeft=true;
+			this.rotateRight=false;
+		}
+		
 	}
 	break;
 	case 'right':{
-		if (this.movingRight != true)
-			this.movingRight=true;
+		if(!this.rotateRight){
+			this.rotateLeft=false;
+			this.rotateRight=true;
+		}
 	}
 	break;
 	case 'forward':{
@@ -173,53 +174,54 @@ MySubmarine.prototype.switchDirection = function(direction) {
 			this.speed+=this.minSpeed;
 		}else {
 			this.speed+=this.accel;
-		}
-		 
-		 console.log(this.speed);
-		/*if (!this.movingForward){
-			this.movingForward=true;
-			this.movingBack=false;
-		}*/
-			
+		}			
 	}
 	break;
-	
 	case 'back':{
-		 this.speed-=this.accel;
-		 console.log(this.speed);
-		 /*
-		if (this.movingBack != true){
-			this.movingBack=true;
-			this.movingForward=false;
-		}*/
+		if(this.speed==0){
+			this.speed-=this.minSpeed;
+		}else {
+			this.speed-=this.accel;
+		}
 	}
 	break;
-	
 	case 'up':{
-		if (this.movingUp != true)
-			this.movingUp=true;
+		
 	}
 	break;
-	
 	case 'down':{
-		if (this.movingDown != true) 
-			this.movingDown=true;
+		
+	}
+	break;	
+	}
+};
+
+MySubmarine.prototype.stopMoving = function(direction) {
+	switch(direction){
+	case 'left':{
+		this.rotateLeft=false;
+		this.rotateRight=false;
 	}
 	break;
-	
-	
+	case 'right':{
+		this.rotateLeft=false;
+		this.rotateRight=false;
 	}
-
-};
+	break;
+	};
+	
+}
 
 MySubmarine.prototype.update = function(currTime){
 	this.lastime = this.lastime || currTime;
  	var dt = currTime - this.lastime;
 	this.lastime = currTime;
-	var minPropAngle=(dt/1000)*360 * degToRad;
-	this.z += Math.cos(this.angle * degToRad) * this.speed*dt/1000;
-	this.x += Math.sin(this.angle * degToRad) * this.speed*dt/1000;
+	
+	var minPropAngle=(dt/1000)*360 * degToRad;//1 rotacao por segundo
+	
+	
 	 
+	//Proppeller's angles update 
 	if(this.speed==0){
 		this.rightProppellerAngle=0;
 		this.leftProppellerAngle=0;
@@ -233,6 +235,17 @@ MySubmarine.prototype.update = function(currTime){
 		this.leftProppellerAngle-=this.minPropAngle*this.speed*360 * degToRad;
 	}
 	 
+	//Vertical Fin angle update
+	if(this.rotateLeft)
+		this.angle-=0.5;
+	else if(this.rotateRight)
+		this.angle+=0.5;
+	
+	//Movement Update
+	this.z += Math.cos(this.angle * degToRad) * this.speed*dt/1000;
+	this.x += Math.sin(this.angle * degToRad) * this.speed*dt/1000;
+	
+	
 };
 
 MySubmarine.prototype.periscopeUp = function(){

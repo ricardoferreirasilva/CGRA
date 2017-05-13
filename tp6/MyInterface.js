@@ -119,7 +119,7 @@ MyInterface.prototype.processKeyDown = function(event) {
  * processKeyUp
  * @param event {Event}
  */
-/*
+
 MyInterface.prototype.processKeyUp = function(event) {
 	CGFinterface.prototype.processKeyUp.call(this, event);
 	switch (event.keyCode)
@@ -136,7 +136,7 @@ MyInterface.prototype.processKeyUp = function(event) {
 	case (68)://d - right
 		this.scene.submarine.stopMoving('right');
 		break;
-	case (119)://w - forward
+		/*case (119)://w - forward
 		this.scene.submarine.constMove('forward');
 		break;
 	case (87)://w - forward
@@ -159,7 +159,7 @@ MyInterface.prototype.processKeyUp = function(event) {
 		break;
 	case (69)://E descer
 		this.scene.submarine.constMove('down');
-		break;
+		break;*/
 	};
-};*/
+};
 
