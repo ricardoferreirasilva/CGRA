@@ -60,102 +60,66 @@ MyInterface.prototype.init = function(application) {
 	return true;
 };
 
-/**
- * processKeyboard
- * @param event {Event}
- */
-
 MyInterface.prototype.processKeyboard = function(event) {
 	// call CGFinterface default code (omit if you want to override)
-	//CGFinterface.prototype.processKeyboard.call(this,event);
+	CGFinterface.prototype.processKeyboard.call(this,event);
 	
 	// Check key codes e.g. here: http://www.asciitable.com/
 	// or use String.fromCharCode(event.keyCode) to compare chars
 	
 	// for better cross-browser support, you may also check suggestions on using event.which in http://www.w3schools.com/jsref/event_key_keycode.asp
 	
-	/*switch (event.keyCode)
+	switch (event.keyCode)
 	{
-		case (97):{//a - left
-			console.log("Key 'a' pressed");
-			this.scene.rotateLeft();
-		}
-		break;
-		case (100):{//d - right
-			console.log("Key 'd' pressed");
-			this.scene.rotateRight();
-		}
-		break;
-		case (119):{//w - up
-			console.log("Key 'w' pressed");
-			this.scene.translateForward();
-		}
-		break;
-		case (115):{//s - down
-			console.log("Key 's' pressed");
-			this.scene.translateBackwards();
-		}
-		break;
-	};*/
-}
-
-MyInterface.prototype.processKeyDown = function(event) {
-	switch (event.which || event.keyCode)
-	{
-		case (97 || 65)://a - left
+		case (97)://a - left
 			this.scene.submarine.switchDirection('left');
 			break;
-		case (100 || 68)://d - right
+		case (65)://a - left
+			this.scene.submarine.switchDirection('left');
+			break;
+		case (100)://d - right
 			this.scene.submarine.switchDirection('right');
 			break;
-		case (119 || 87)://w - forward
+		case (68)://d - right
+			this.scene.submarine.switchDirection('right');
+			break;
+		case (119)://w - forward
+			this.scene.submarine.switchDirection('forward');
+			
+		case (87)://w - forward
 			this.scene.submarine.switchDirection('forward');
 			break;
-		case (115 || 83)://s - back
+		case (83)://s - back
 			this.scene.submarine.switchDirection('back');
 			break;
-		case (113 || 81)://Q subir
+		case (115)://s - back
+			this.scene.submarine.switchDirection('back');
+			break;
+		case (81)://Q subir
 			this.scene.submarine.switchDirection('up');
 			break;
-		case (101 || 69)://E descer
+		case (113)://Q subir
+			this.scene.submarine.switchDirection('up');
+			break;
+		case (69)://E descer
 			this.scene.submarine.switchDirection('down');
 			break;
-		case(80 || 112)://p subir periscopio
+		case (101)://E descer
+			this.scene.submarine.switchDirection('down');
+			break;
+		case(80)://p subir periscopio
 			this.scene.submarine.periscopeUp();
 			break;
-		case(76 || 108)://l descer periscopio
+		case(112)://p subir periscopio
+			this.scene.submarine.periscopeUp();
+			break;
+		case(76)://l descer periscopio
+			this.scene.submarine.periscopeDown();
+			break;
+		case(108)://l descer periscopio
 			this.scene.submarine.periscopeDown();
 			break;
 	};
-};
+}
 
-/**
- * processKeyUp
- * @param event {Event}
- */
-
-MyInterface.prototype.processKeyUp = function(event) {
-	
-	switch (event.which || event.keyCode)
-	{
-	case (97)://a - left
-		this.scene.submarine.stopMoving('left');
-		break;
-	case (100)://d - right
-		this.scene.submarine.stopMoving('right');
-		break;
-	case (119)://w - forward
-		this.scene.submarine.stopMoving('forward');
-		break;
-	case (115)://s - back
-		this.scene.submarine.stopMoving('back');
-		break;
-	case (113)://Q subir
-		this.scene.submarine.stopMoving('up');
-		break;
-	case (101)://E descer
-		this.scene.submarine.stopMoving('down');
-		break;
-	};
-};
 

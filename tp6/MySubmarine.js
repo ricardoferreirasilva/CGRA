@@ -14,6 +14,7 @@ function MySubmarine(scene) {
     this.rightProppellerAngle=0;
     this.leftProppellerAngle=0;
     this.speed=0;
+    this.accel=0.0005;
     
     this.movingForward=false;
     this.movingBack=false;
@@ -163,15 +164,20 @@ MySubmarine.prototype.switchDirection = function(direction) {
 	}
 	break;
 	case 'forward':{
-		this.speed+=0.1;
-		//if (this.movingForward != true)
-			//this.movingForward=true;
+		
+		if (!this.movingForward){
+			this.movingForward=true;
+			this.movingBack=false;
+		}
+			
 	}
 	break;
 	
 	case 'back':{
-		if (this.movingBack != true)
+		if (this.movingBack != true){
 			this.movingBack=true;
+			this.movingForward=false;
+		}
 	}
 	break;
 	
@@ -192,62 +198,26 @@ MySubmarine.prototype.switchDirection = function(direction) {
 
 };
 
-MySubmarine.prototype.stopMoving = function(direction) {
-	switch(direction){
-	case 'left':{
-		if (this.movingLeft != false) 
-			this.movingLeft=false;
-	}
-	break;
-	case 'right':{
-		if (this.movingRight != false) 
-			this.movingRight=false;
-	}
-	break;
-	
-	case 'forward':{
-		if (this.movingForward != false) 
-			this.movingForward=false;
-	}
-	break;
-	
-	case 'back':{
-		if (this.movingBack != false) 
-			this.movingBack=false;
-	}
-	break;
-	
-	case 'up':{
-		if (this.movingUp != false) 
-			this.movingUp=false;
-	}
-	break;
-	
-	case 'down':{
-		if (this.movingDown != false) 
-			this.movingDown=false;
-	}
-	break;
-
-	};
-};
-
 MySubmarine.prototype.update = function(currTime){
-	  this.deltaTime = this.deltaTime || 0;
+	  /*this.deltaTime = this.deltaTime || 0;
 	    this.deltaTime = currTime - this.lastTime;
 	    this.lastTime = currTime;
-	    var perSecond = (this.deltaTime / (1000));
-	    
-		this.z += Math.cos(this.angle * degToRad) * this.speed * perSecond;
-		this.x += Math.sin(this.angle * degToRad) * this.speed * perSecond;
-		/*
+	    var perSecond = (this.deltaTime / (1000));*/
+	this.z += Math.cos(this.angle * degToRad) * this.speed;
+	this.x += Math.sin(this.angle * degToRad) * this.speed;
+	 
+		
 	 if(this.movingForward){
-		 this.accel+=0.0002;
-	 }
-	 else if(this.movingBack){
-		 this.accel-=0.0002;
+		 this.speed+=this.accel;
 	 }
 	 
+	 else if(this.movingBack){
+		 this.speed-=this.accel;
+	 }
+	
+	 
+	 
+	 /*
 	 if(this.movingUp){
 		 
 	 }
