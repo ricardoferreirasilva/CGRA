@@ -20,6 +20,10 @@ function MySubmarine(scene) {
     this.speed=0.00;
     this.minSpeed=1;
     this.accel=0.05;
+
+	this.rotAc=0.001;
+	this.rotSpeed=0.00;
+	this.rotDrag=0.00001;
     
     this.rotateLeft=false;
 	this.rotateRight=false;
@@ -154,19 +158,22 @@ MySubmarine.prototype.display = function() {
 
 MySubmarine.prototype.switchDirection = function(direction) {
 	switch(direction){
+	/*
+		If turning left, increment rotational speed with rotational acceleration.
+		If turning right, decrement rotational speed with rotational acceleration.
+		On update, constantly rotate with rotate speed. Positive values -> Left. Negative -> Right
+
+	*/
 	case 'left':{
-		if(!this.rotateLeft){
-			this.rotateLeft=true;
-			this.rotateRight=false;
-		}
+		this.rotSpeed += this.rotAc;
+		console.log("rotAC: " + this.rotAc + " rotSpeed: " + this.rotSpeed);
 		
 	}
 	break;
 	case 'right':{
-		if(!this.rotateRight){
-			this.rotateLeft=false;
-			this.rotateRight=true;
-		}
+		this.rotSpeed -= this.rotAc;
+		console.log("rotAC: " + this.rotAc + " rotSpeed: " + this.rotSpeed);
+
 	}
 	break;
 	case 'forward':{
@@ -197,18 +204,7 @@ MySubmarine.prototype.switchDirection = function(direction) {
 };
 
 MySubmarine.prototype.stopMoving = function(direction) {
-	switch(direction){
-	case 'left':{
-		this.rotateLeft=false;
-		this.rotateRight=false;
-	}
-	break;
-	case 'right':{
-		this.rotateLeft=false;
-		this.rotateRight=false;
-	}
-	break;
-	};
+	//noneed
 	
 }
 
@@ -236,14 +232,15 @@ MySubmarine.prototype.update = function(currTime){
 	}
 	 
 	//Vertical Fin angle update
-	if(this.rotateLeft)
-		this.angle-=0.5;
-	else if(this.rotateRight)
-		this.angle+=0.5;
+	//if(this.rotateLeft && !this.rotateRight) this.angle-=this.rotSpeed;
+	//else if(!this.rotateLeft && this.rotateRight) this.angle+=this.rotSpeed;
+	this.angle += this.rotSpeed;
+	if(this.rotSpeed > 0.0000) this.rotSpeed -= this.rotDrag;
+	else if(this.rotSpeed < 0.0000) this.rotSpeed += this.rotDrag;
 	
 	//Movement Update
-	this.z += Math.cos(this.angle * degToRad) * this.speed*dt/1000;
-	this.x += Math.sin(this.angle * degToRad) * this.speed*dt/1000;
+	this.z += Math.cos(this.angle) * this.speed*dt/1000;
+	this.x += Math.sin(this.angle) * this.speed*dt/1000;
 	
 	
 };
