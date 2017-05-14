@@ -21,12 +21,15 @@ function MySubmarine(scene) {
     this.minSpeed=1;
     this.accel=0.05;
 	this.speedDrag = 0.003;
-	this.rotAc=0.001;
+	this.rotAc=0.0001;
 	this.rotSpeed=0.00;
 	this.rotDrag=0.00001;
     
     this.rotateLeft=false;
 	this.rotateRight=false;
+	this.moveForward=false;
+	this.moveBack=false;
+	
     
     this.triangle= new MyTriangle(scene);
     this.hemisphere= new MyHemiSphere(scene,20,8);
@@ -165,31 +168,39 @@ MySubmarine.prototype.switchDirection = function(direction) {
 
 	*/
 	case 'left':{
-		this.rotSpeed += this.rotAc;
-		console.log("rotAC: " + this.rotAc + " rotSpeed: " + this.rotSpeed);
+		this.rotateLeft=true;
+		//this.rotSpeed += this.rotAc;
+		//console.log("rotAC: " + this.rotAc + " rotSpeed: " + this.rotSpeed);
+		
+		//rotateFin
 		
 	}
 	break;
 	case 'right':{
-		this.rotSpeed -= this.rotAc;
-		console.log("rotAC: " + this.rotAc + " rotSpeed: " + this.rotSpeed);
+		this.rotateRight=true;
+		//this.rotSpeed -= this.rotAc;
+		//console.log("rotAC: " + this.rotAc + " rotSpeed: " + this.rotSpeed);
 
+		//rotateFin
+		
 	}
 	break;
 	case 'forward':{
-		if(this.speed==0){
+		this.moveForward=true;
+		/*if(this.speed==0){
 			this.speed+=this.minSpeed;
 		}else {
 			this.speed+=this.accel;
-		}			
+		}			*/
 	}
 	break;
 	case 'back':{
-		if(this.speed==0){
+		this.moveBack=true;
+		/*if(this.speed==0){
 			this.speed-=this.minSpeed;
 		}else {
 			this.speed-=this.accel;
-		}
+		}*/
 	}
 	break;
 	case 'up':{
@@ -204,7 +215,28 @@ MySubmarine.prototype.switchDirection = function(direction) {
 };
 
 MySubmarine.prototype.stopMoving = function(direction) {
-	//noneed
+	switch(direction){
+	case 'left':{
+		this.rotateLeft=false;
+		//rotateFin
+		
+	}
+	break;
+	case 'right':{
+		this.rotateRight=false;
+		//rotateFin
+		
+	}
+	break;
+	case 'forward':{
+		
+	}
+	break;
+	case 'back':{
+		
+	}
+	break;
+	};
 	
 }
 
@@ -215,7 +247,19 @@ MySubmarine.prototype.update = function(currTime){
 	
 	var minPropAngle=(dt/1000)*360 * degToRad;//1 rotacao por segundo
 	
-	
+	if(this.moveForward){
+		if(this.speed==0){
+			this.speed+=this.minSpeed;
+		}else {
+			this.speed+=this.accel;
+		}
+	}else if(this.moveBack){
+		if(this.speed==0){
+			this.speed-=this.minSpeed;
+		}else {
+			this.speed-=this.accel;
+		}
+	}
 	 
 	//Proppeller's angles update 
 	if(this.speed==0){
@@ -230,16 +274,33 @@ MySubmarine.prototype.update = function(currTime){
 		this.rightProppellerAngle+=this.minPropAngle*this.speed*360 * degToRad;
 		this.leftProppellerAngle-=this.minPropAngle*this.speed*360 * degToRad;
 	}
+	
+	if(this.rotateRight){
+		this.rotSpeed -= this.rotAc;
+		console.log("rotAC: " + this.rotAc + " rotSpeed: " + this.rotSpeed);
+	}
+	else if(this.rotateLeft){
+		this.rotSpeed += this.rotAc;
+		console.log("rotAC: " + this.rotAc + " rotSpeed: " + this.rotSpeed);
+	}
 	 
 	//Vertical Fin angle update
-	//if(this.rotateLeft && !this.rotateRight) this.angle-=this.rotSpeed;
-	//else if(!this.rotateLeft && this.rotateRight) this.angle+=this.rotSpeed;
-	this.angle += this.rotSpeed;
-	if(this.rotSpeed > 0.0000) this.rotSpeed -= this.rotDrag;
-	else if(this.rotSpeed < 0.0000) this.rotSpeed += this.rotDrag;
+	if(this.rotateLeft && !this.rotateRight) this.angle-=this.rotSpeed;
+	else if(!this.rotateLeft && this.rotateRight) this.angle+=this.rotSpeed;
 	
-	if(this.speed > 0.0000) this.speed-=this.speedDrag;
-	else if(this.speed < 0.0000) this.speed+=this.speedDrag;
+	//this.angle += this.rotSpeed;
+	
+	if(this.rotSpeed > 0.0000) 
+		this.rotSpeed -= this.rotDrag;
+	else if(this.rotSpeed < 0.0000) 
+		this.rotSpeed += this.rotDrag;
+	
+	if(this.speed > 0.0000) 
+		this.speed-=this.speedDrag;
+	else if(this.speed < 0.0000) 
+		this.speed+=this.speedDrag;
+	
+	
 	//Movement Update
 	this.z += Math.cos(this.angle) * this.speed*dt/1000;
 	this.x += Math.sin(this.angle) * this.speed*dt/1000;

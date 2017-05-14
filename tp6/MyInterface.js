@@ -136,7 +136,7 @@ MyInterface.prototype.processKeyUp = function(event) {
 	case (68)://d - right
 		this.scene.submarine.stopMoving('right');
 		break;
-		/*case (119)://w - forward
+	/*case (119)://w - forward
 		this.scene.submarine.constMove('forward');
 		break;
 	case (87)://w - forward
