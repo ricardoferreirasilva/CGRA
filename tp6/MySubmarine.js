@@ -20,7 +20,7 @@ function MySubmarine(scene) {
     this.speed=0.00;
     this.minSpeed=1;
     this.accel=0.05;
-
+	this.speedDrag = 0.003;
 	this.rotAc=0.001;
 	this.rotSpeed=0.00;
 	this.rotDrag=0.00001;
@@ -238,6 +238,8 @@ MySubmarine.prototype.update = function(currTime){
 	if(this.rotSpeed > 0.0000) this.rotSpeed -= this.rotDrag;
 	else if(this.rotSpeed < 0.0000) this.rotSpeed += this.rotDrag;
 	
+	if(this.speed > 0.0000) this.speed-=this.speedDrag;
+	else if(this.speed < 0.0000) this.speed+=this.speedDrag;
 	//Movement Update
 	this.z += Math.cos(this.angle) * this.speed*dt/1000;
 	this.x += Math.sin(this.angle) * this.speed*dt/1000;
