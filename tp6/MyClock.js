@@ -5,13 +5,13 @@ function MyClock(scene, slices,stacks) {
  	this.tampo=new MyCircle(scene,slices);
  	this.tampo.initBuffers();
 
- 	this.hourPointer=new MyPointer(scene, 0.1);
+ 	this.hourPointer=new MyPointer(scene, 0.3);
  	this.hourPointer.initBuffers();
  	
- 	this.minutePointer=new MyPointer(scene,0.2);
+ 	this.minutePointer=new MyPointer(scene,0.5);
  	this.minutePointer.initBuffers();
  	
- 	this.secondPointer=new MyPointer(scene, 0.25);
+ 	this.secondPointer=new MyPointer(scene, 0.8);
  	this.secondPointer.initBuffers();
  	
  	this.clockTexture = new CGFappearance(this.scene);
