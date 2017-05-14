@@ -125,40 +125,40 @@ MyInterface.prototype.processKeyUp = function(event) {
 	switch (event.keyCode)
 	{
 	case (97)://a - left
-		this.scene.submarine.stopMoving('left');
+		this.scene.submarine.handleKeyUp('left');
 		break;
 	case (65)://a - left
-		this.scene.submarine.stopMoving('left');
+		this.scene.submarine.handleKeyUp('left');
 		break;
 	case (100)://d - right
-		this.scene.submarine.stopMoving('right');
+		this.scene.submarine.handleKeyUp('right');
 		break;
 	case (68)://d - right
-		this.scene.submarine.stopMoving('right');
+		this.scene.submarine.handleKeyUp('right');
 		break;
-	/*case (119)://w - forward
-		this.scene.submarine.constMove('forward');
+	case (119)://w - forward
+		this.scene.submarine.handleKeyUp('forward');
 		break;
 	case (87)://w - forward
-		this.scene.submarine.constMove('forward');
+		this.scene.submarine.handleKeyUp('forward');
 		break;
 	case (115)://s - back
-		this.scene.submarine.constMove('back');
+		this.scene.submarine.handleKeyUp('back');
 		break;
 	case (83)://s - back
-		this.scene.submarine.constMove('back');
+		this.scene.submarine.handleKeyUp('back');
 		break;
-	case (113)://Q subir
-		this.scene.submarine.constMove('up');
+	/*case (113)://Q subir
+		this.scene.submarine.handleKeyUp('up');
 		break;
 	case (81)://Q subir
-		this.scene.submarine.constMove('up');
+		this.scene.submarine.handleKeyUp('up');
 		break;
 	case (101)://E descer
-		this.scene.submarine.constMove('down');
+		this.scene.submarine.handleKeyUp('down');
 		break;
 	case (69)://E descer
-		this.scene.submarine.constMove('down');
+		this.scene.submarine.handleKeyUp('down');
 		break;*/
 	};
 };

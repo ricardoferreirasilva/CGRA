@@ -214,7 +214,7 @@ MySubmarine.prototype.switchDirection = function(direction) {
 	}
 };
 
-MySubmarine.prototype.stopMoving = function(direction) {
+MySubmarine.prototype.handleKeyUp = function(direction) {
 	switch(direction){
 	case 'left':{
 		this.rotateLeft=false;
@@ -229,11 +229,11 @@ MySubmarine.prototype.stopMoving = function(direction) {
 	}
 	break;
 	case 'forward':{
-		
+		this.moveForward=false;
 	}
 	break;
 	case 'back':{
-		
+		this.moveBack=false;
 	}
 	break;
 	};
