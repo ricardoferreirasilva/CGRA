@@ -53,52 +53,57 @@ MyInterface.prototype.init = function(application) {
 	// this.speed=3;
 	// min and max values can be specified as parameters
 	
-	this.gui.add(this.scene, 'speed', -5, 5).name('Speed');
+	//this.gui.add(this.scene, 'speed', -5, 5).name('Speed');
 
 	this.gui.add(this.scene, 'relogio').name('Clock');
 
 	return true;
 };
 
+/**
+ * processKeyDown
+ * @param event {Event}
+ */
+
 MyInterface.prototype.processKeyDown = function(event) {
 	CGFinterface.prototype.processKeyDown.call(this,event);
 	switch (event.keyCode)
 	{
 		case (97)://a - left
-			this.scene.submarine.switchDirection('left');
+			this.scene.submarine.handleKeyDown('left');
 			break;
 		case (65)://a - left
-			this.scene.submarine.switchDirection('left');
+			this.scene.submarine.handleKeyDown('left');
 			break;
 		case (100)://d - right
-			this.scene.submarine.switchDirection('right');
+			this.scene.submarine.handleKeyDown('right');
 			break;
 		case (68)://d - right
-			this.scene.submarine.switchDirection('right');
+			this.scene.submarine.handleKeyDown('right');
 			break;
 		case (119)://w - forward
-			this.scene.submarine.switchDirection('forward');
+			this.scene.submarine.handleKeyDown('forward');
 			
 		case (87)://w - forward
-			this.scene.submarine.switchDirection('forward');
+			this.scene.submarine.handleKeyDown('forward');
 			break;
 		case (83)://s - back
-			this.scene.submarine.switchDirection('back');
+			this.scene.submarine.handleKeyDown('back');
 			break;
 		case (115)://s - back
-			this.scene.submarine.switchDirection('back');
+			this.scene.submarine.handleKeyDown('back');
 			break;
 		case (81)://Q subir
-			this.scene.submarine.switchDirection('up');
+			this.scene.submarine.handleKeyDown('up');
 			break;
 		case (113)://Q subir
-			this.scene.submarine.switchDirection('up');
+			this.scene.submarine.handleKeyDown('up');
 			break;
 		case (69)://E descer
-			this.scene.submarine.switchDirection('down');
+			this.scene.submarine.handleKeyDown('down');
 			break;
 		case (101)://E descer
-			this.scene.submarine.switchDirection('down');
+			this.scene.submarine.handleKeyDown('down');
 			break;
 		case(80)://p subir periscopio
 			this.scene.submarine.periscopeUp();
@@ -148,7 +153,7 @@ MyInterface.prototype.processKeyUp = function(event) {
 	case (83)://s - back
 		this.scene.submarine.handleKeyUp('back');
 		break;
-	/*case (113)://Q subir
+	case (113)://Q subir
 		this.scene.submarine.handleKeyUp('up');
 		break;
 	case (81)://Q subir
@@ -159,7 +164,7 @@ MyInterface.prototype.processKeyUp = function(event) {
 		break;
 	case (69)://E descer
 		this.scene.submarine.handleKeyUp('down');
-		break;*/
+		break;
 	};
 };
 

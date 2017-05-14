@@ -5,31 +5,42 @@
  */
 function MySubmarine(scene) {
     CGFobject.call(this, scene);
-    this.angle=0;
+    this.ver_angle=0;
+    this.hor_angle=0;
     this.x=0;
     this.z=0;
     this.y=0;
     this.r=2;
-    this.flipperAngle=0;
+    this.horizontalFlipperAngle=0;
+    this.verticalFlipperAngle=0;
     
     //proppellers
     this.rightProppellerAngle=0;
     this.leftProppellerAngle=0;
     this.minPropAngle=0.1;
     
+    //move forward/back
     this.speed=0.00;
     this.minSpeed=1;
     this.accel=0.05;
 	this.speedDrag = 0.003;
-	this.rotAc=0.0001;
-	this.rotSpeed=0.00;
-	this.rotDrag=0.00001;
+	
+	//move right/left
+	this.ver_rotAc=0.0001;
+	this.ver_rotSpeed=0.00;
+	this.ver_rotDrag=0.00001;
+	
+	//move up/down
+	this.hor_rotAc=0.0001;
+	this.hor_rotSpeed=0.00;
+	this.hor_rotDrag=0.00001;
     
     this.rotateLeft=false;
 	this.rotateRight=false;
 	this.moveForward=false;
 	this.moveBack=false;
-	
+	this.moveUp=false;
+	this.moveDown=false;
     
     this.triangle= new MyTriangle(scene);
     this.hemisphere= new MyHemiSphere(scene,20,8);
@@ -49,7 +60,7 @@ MySubmarine.prototype.display = function() {
 	this.scene.submarineAppearances[this.scene.currSubmarineAppearance].apply();
 	
 	this.scene.translate(this.x,this.y,this.z);
-	this.scene.rotate(this.angle,0, 1, 0);
+	this.scene.rotate(this.ver_angle,0, 1, 0);
 		
 	//Submarine Display
 	this.scene.pushMatrix();
@@ -117,12 +128,17 @@ MySubmarine.prototype.display = function() {
 	
 	 //Back Flippers
     this.scene.pushMatrix();
-    	this.scene.rotate(this.flipperAngle * degToRad,1,0, 0);
+    	
     	this.scene.translate(0,0,0.15);
     	this.scene.rotate(180 * degToRad,1, 0, 0);
     	this.scene.rotate(90 * degToRad,0, 1, 0);
-	 	this.flipper.display();
+    	this.scene.pushMatrix();
+    		this.scene.rotate(this.horizontalFlipperAngle * degToRad,0,0, 1);
+	 		this.flipper.display();
+	 	this.scene.popMatrix();
+	 		
 	 	this.scene.pushMatrix();
+	 		this.scene.rotate(this.verticalFlipperAngle * degToRad,0,1,0);
 	 		this.scene.rotate(90 * degToRad,1,0, 0);
 	 		this.flipper.display();
 	 	this.scene.popMatrix();
@@ -159,7 +175,7 @@ MySubmarine.prototype.display = function() {
  	
 };//rgb - xyz
 
-MySubmarine.prototype.switchDirection = function(direction) {
+MySubmarine.prototype.handleKeyDown = function(direction) {
 	switch(direction){
 	/*
 		If turning left, increment rotational speed with rotational acceleration.
@@ -169,46 +185,48 @@ MySubmarine.prototype.switchDirection = function(direction) {
 	*/
 	case 'left':{
 		this.rotateLeft=true;
-		//this.rotSpeed += this.rotAc;
-		//console.log("rotAC: " + this.rotAc + " rotSpeed: " + this.rotSpeed);
+		this.rotateRight=false;
 		
 		//rotateFin
-		
+		if(this.verticalFlipperAngle<40){
+			this.verticalFlipperAngle+=1;
+		}
+		else this.verticalFlipperAngle=40;
 	}
 	break;
 	case 'right':{
 		this.rotateRight=true;
-		//this.rotSpeed -= this.rotAc;
-		//console.log("rotAC: " + this.rotAc + " rotSpeed: " + this.rotSpeed);
-
-		//rotateFin
+		this.rotateLeft=false;
 		
+		//rotateFin
+		if(this.verticalFlipperAngle>-40){
+			this.verticalFlipperAngle-=1;
+		}
+		else this.verticalFlipperAngle=-40;
 	}
 	break;
 	case 'forward':{
 		this.moveForward=true;
-		/*if(this.speed==0){
-			this.speed+=this.minSpeed;
-		}else {
-			this.speed+=this.accel;
-		}			*/
 	}
 	break;
 	case 'back':{
 		this.moveBack=true;
-		/*if(this.speed==0){
-			this.speed-=this.minSpeed;
-		}else {
-			this.speed-=this.accel;
-		}*/
 	}
 	break;
 	case 'up':{
-		
+		this.moveUp=true;
+		if(this.horizontalFlipperAngle<40){
+			this.horizontalFlipperAngle+=1;
+		}
+		else this.horizontalFlipperAngle=40;
 	}
 	break;
 	case 'down':{
-		
+		this.moveDown=true;
+		if(this.horizontalFlipperAngle>-40){
+			this.horizontalFlipperAngle-=1;
+		}
+		else this.horizontalFlipperAngle=-40;
 	}
 	break;	
 	}
@@ -219,13 +237,19 @@ MySubmarine.prototype.handleKeyUp = function(direction) {
 	case 'left':{
 		this.rotateLeft=false;
 		//rotateFin
-		
+		if(this.verticalFlipperAngle>0){
+			this.verticalFlipperAngle-=5;
+		}
+		else this.verticalFlipperAngle=0;
 	}
 	break;
 	case 'right':{
 		this.rotateRight=false;
 		//rotateFin
-		
+		if(this.verticalFlipperAngle<0){
+			this.verticalFlipperAngle+=5;
+		}
+		else this.verticalFlipperAngle=0;
 	}
 	break;
 	case 'forward':{
@@ -236,8 +260,23 @@ MySubmarine.prototype.handleKeyUp = function(direction) {
 		this.moveBack=false;
 	}
 	break;
+	case 'up':{
+		this.moveUp=false;
+		if(this.horizontalFlipperAngle<0){
+			this.horizontalFlipperAngle+=5;
+		}
+		else this.horizontalFlipperAngle=0;
+	}
+	break;
+	case 'down':{
+		this.moveDown=false;
+		if(this.horizontalFlipperAngle>0){
+			this.horizontalFlipperAngle-=5;
+		}
+		else this.horizontalFlipperAngle=0;
+	}
+	break;
 	};
-	
 }
 
 MySubmarine.prototype.update = function(currTime){
@@ -275,20 +314,34 @@ MySubmarine.prototype.update = function(currTime){
 		this.leftProppellerAngle-=this.minPropAngle*this.speed*360 * degToRad;
 	}
 	
-	if(this.rotateRight){
-		this.rotSpeed -= this.rotAc;
-		console.log("rotAC: " + this.rotAc + " rotSpeed: " + this.rotSpeed);
+	if(!this.rotateLeft && this.rotateRight){
+		this.ver_rotSpeed -= this.ver_rotAc;
+		console.log("rotAC: " + this.ver_rotAc + " rotSpeed: " + this.ver_rotSpeed);
 	}
-	else if(this.rotateLeft){
-		this.rotSpeed += this.rotAc;
-		console.log("rotAC: " + this.rotAc + " rotSpeed: " + this.rotSpeed);
+	else if(this.rotateLeft && !this.rotateRight){
+		this.ver_rotSpeed += this.ver_rotAc;
+		console.log("rotAC: " + this.ver_rotAc + " rotSpeed: " + this.ver_rotSpeed);
 	}
-	 
-	//Vertical Fin angle update
-	if(this.rotateLeft && !this.rotateRight) this.angle-=this.rotSpeed;
-	else if(!this.rotateLeft && this.rotateRight) this.angle+=this.rotSpeed;
 	
-	//this.angle += this.rotSpeed;
+	//Vertical Fin angle update
+	/*if(this.rotateLeft && !this.rotateRight) this.angle-=this.rotSpeed;
+	else if(!this.rotateLeft && this.rotateRight) this.angle+=this.rotSpeed;
+	*/
+	if(!(!this.rotateLeft && !this.rotateRight))
+		this.ver_angle += this.ver_rotSpeed;
+	
+	//Horizontal Angle update
+	
+	if(!this.moveUp && this.moveDown){
+		this.hor_rotSpeed -= this.hor_rotAc;
+		console.log("hor_rotAC: " + this.hor_rotAc + " hor_rotSpeed: " + this.hor_rotSpeed);
+	}
+	else if(this.moveUp && !this.moveDown){
+		this.hor_rotSpeed += this.hor_rotAc;
+		console.log("hor_rotAC: " + this.hor_rotAc + " hor_rotSpeed: " + this.hor_rotSpeed);
+	}
+	
+	//Drag apply
 	
 	if(this.rotSpeed > 0.0000) 
 		this.rotSpeed -= this.rotDrag;
@@ -302,15 +355,16 @@ MySubmarine.prototype.update = function(currTime){
 	
 	
 	//Movement Update
-	this.z += Math.cos(this.angle) * this.speed*dt/1000;
-	this.x += Math.sin(this.angle) * this.speed*dt/1000;
-	
+	this.z += Math.cos(this.ver_angle) * this.speed*dt/1000;
+	this.x += Math.sin(this.ver_angle) * this.speed*dt/1000;
+	this.y -= Math.tan(this.ver_angle) * (dt * this.speed / 60000) * Math.cos(this.hor_angle);
 	
 };
 
 MySubmarine.prototype.periscopeUp = function(){
 	
 };
+
 
 MySubmarine.prototype.periscopeDown = function(){
 	
