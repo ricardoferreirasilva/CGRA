@@ -22,6 +22,7 @@ serialInclude([
 	'MyProppeller.js',
 	'MyFlipper.js',
 	'MySubmarine.js',
+	'MyTarget.js',
 
 	main=function() {
 		var app = new CGFapplication(document.body);

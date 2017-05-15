@@ -14,6 +14,13 @@ function MySubmarine(scene) {
     this.horizontalFlipperAngle=0;
     this.verticalFlipperAngle=0;
     
+    //Periscope
+    this.peri_y=0;
+    this.peri_maxy=6;
+    this.peri_miny=-4.5;
+    this.peri_speed=0.1;
+    
+    
     //proppellers
     this.rightProppellerAngle=0;
     this.leftProppellerAngle=0;
@@ -108,6 +115,8 @@ MySubmarine.prototype.display = function() {
 		this.scene.translate(0,0,-0.75);
 		this.scene.scale(0.05,0.05,0.5);
 		this.scene.translate(0,26.65,7.5);
+		this.scene.translate(0,this.peri_y,0);
+		//horizontal tube
 		this.scene.pushMatrix();
 			this.scene.translate(0,-0.20,-0.1);
 			this.scene.scale(1,1,0.45);
@@ -119,12 +128,13 @@ MySubmarine.prototype.display = function() {
 			this.scene.rotate(180 * degToRad,1, 0,0);
 			this.circle.display();
 		this.scene.popMatrix();
+		//vertical tube
 		this.scene.pushMatrix();
-			this.scene.scale(1,6,0.1);
+			this.scene.scale(1,12,0.1);
 			this.scene.rotate(90 * degToRad,1, 0,0);
 			this.cylinder.display();
+		this.scene.popMatrix();
 		this.scene.popMatrix();	
-	this.scene.popMatrix();	
 	
 	 //Back Flippers
     this.scene.pushMatrix();
@@ -153,7 +163,10 @@ MySubmarine.prototype.display = function() {
 		this.scene.rotate(180 * degToRad,0,1, 0);
 	 	this.scene.scale(1,1,(1.42/2.34));
 	 	this.scene.translate(-2.8,-0.8,0);
-	 	this.flipper.display();
+	 	this.scene.pushMatrix();
+	 		this.scene.rotate(this.horizontalFlipperAngle * degToRad,0,0,1);
+	 		this.flipper.display();
+	 	this.scene.popMatrix();
  	this.scene.popMatrix();
  	
  	//Proppellers
@@ -362,10 +375,12 @@ MySubmarine.prototype.update = function(currTime){
 };
 
 MySubmarine.prototype.periscopeUp = function(){
-	
+	if(this.peri_y<this.peri_maxy)
+		this.peri_y+=this.peri_speed;
 };
 
 
 MySubmarine.prototype.periscopeDown = function(){
-	
+	if(this.peri_y>this.peri_miny)
+		this.peri_y-=this.peri_speed;
 };

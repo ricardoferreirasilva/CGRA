@@ -37,7 +37,16 @@ LightingScene.prototype.init = function(application) {
     this.pointer = new MyPointer(this,1);
     this.clock = new MyClock(this, 12, 1);
     this.submarine = new MySubmarine(this);
-
+    
+    //targets
+    this.homer_target = new MyTarget(this);
+	this.homer_target.appearence=1;
+    this.bullseye_target = new MyTarget(this);
+    this.bullseye_target.appearence=0;
+    this.targets=[];
+    this.targets[0]=this.homer_target;
+    this.targets[1]=this.bullseye_target;
+    
     // Materials
     this.materialDefault = new CGFappearance(this);
 
@@ -115,6 +124,20 @@ LightingScene.prototype.init = function(application) {
     this.submarineAppearances[0]=this.materialDefault;
     this.submarineAppearances[1]=this.floorAppearance;
     this.submarineAppearances[2]=this.metalAppearence;
+    
+    this.homerAppearence= new CGFappearance(this);
+    this.homerAppearence.setAmbient(1, 1, 1, 0.1);
+	this.homerAppearence.setDiffuse(0.1, 0.1, 0.1, 0.2);
+	this.homerAppearence.setSpecular(1, 1, 1, 0.3);
+	this.homerAppearence.setShininess(50);
+    this.homerAppearence.loadTexture("../tp6/homer.png");
+    
+    this.bullseyeAppearence= new CGFappearance(this);
+    this.bullseyeAppearence.setAmbient(1, 1, 1, 0.1);
+	this.bullseyeAppearence.setDiffuse(0.1, 0.1, 0.1, 0.2);
+	this.bullseyeAppearence.setSpecular(1, 1, 1, 0.3);
+	this.bullseyeAppearence.setShininess(50);
+    this.bullseyeAppearence.loadTexture("../tp6/bullseye.jpg");
     
     this.currSubmarineAppearance=0; // indica o indice da textura atual do submarino
     this.submarineAppearanceList= ['standard','wood', 'metal'];
@@ -235,13 +258,21 @@ LightingScene.prototype.display = function() {
     this.popMatrix();
 
     //Submarino
-    
     this.pushMatrix();
     	this.materialDefault.apply();
     	this.rotate(90 * degToRad,0, 1, 0);
    	 	this.submarine.display();
    	this.popMatrix();
     
+   	//Target
+   	this.pushMatrix();
+   		this.translate(3,0.1,3);
+   		this.rotate(-90 * degToRad,1, 0, 0);
+   		this.targets[0].display();
+   		this.translate(3,0,0);
+   		this.targets[1].display();
+   	this.popMatrix();
+   	
     // ---- END Primitive drawing section
 }
 LightingScene.prototype.update = function(currTime)
