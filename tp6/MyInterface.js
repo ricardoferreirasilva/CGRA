@@ -117,6 +117,12 @@ MyInterface.prototype.processKeyDown = function(event) {
 		case(108)://l descer periscopio
 			this.scene.submarine.periscopeDown();
 			break;
+		case (102)://F - display torpedo
+			this.scene.submarine.torpedoLockTarget();
+			break;
+		case (70)://F - display torpedo
+			this.scene.submarine.torpedoLockTarget();
+			break;
 	};
 };
 
@@ -164,6 +170,12 @@ MyInterface.prototype.processKeyUp = function(event) {
 		break;
 	case (69)://E descer
 		this.scene.submarine.handleKeyUp('down');
+		break;
+	case (102)://F - lauch torpedo
+		this.scene.submarine.torpedo.launch();
+		break;
+	case (70)://F - launch torpedo
+		this.scene.submarine.torpedo.launch();
 		break;
 	};
 };

@@ -8,6 +8,8 @@ function MyTorpedo(scene) {
     this.x=0;
     this.z=0;
     this.y=0;
+    this.ver_angle=0;
+    this.hor_angle=0;
     
     this.triangle= new MyTriangle(scene);
     this.hemisphere= new MyHemiSphere(scene,20,8);
@@ -27,8 +29,8 @@ MyTorpedo.prototype.display = function() {
 		
 	//Submarine Display
 	this.scene.pushMatrix();
-		this.scene.translate(0,0,0.5*0.92);
-		this.scene.scale(0.73,1,1);		
+		this.scene.translate(0,-0.7,2.04);
+		this.scene.scale(0.25,0.25,0.25);		
 		//Back Hemisphere
 		this.scene.pushMatrix();
 			this.scene.scale(0.5*0.92,0.5*0.92,0.5*0.92);
@@ -40,23 +42,6 @@ MyTorpedo.prototype.display = function() {
 			this.scene.scale(0.5*0.92,0.5*0.92,4.08);
 			this.cylinder.display();
 		this.scene.popMatrix();
-		//Cylinder (Top)
-		this.scene.pushMatrix();
-			this.scene.translate(0,0.92,-0.75);
-			this.scene.rotate(180 * degToRad,0, 0, 1);
-			this.scene.rotate(-90 * degToRad,1, 0, 0);
-			this.scene.scale(0.5*0.88,0.5*0.88,1*0.57);
-			this.scene.translate(0,-7,-0.2);
-			this.cylinder.display();
-			//Circle on the Top
-			this.scene.pushMatrix();
-				this.scene.rotate(180 * degToRad,1, 0, 0);
-				this.circle.display();
-			this.scene.popMatrix();
-			//Cilindro (parte q está a entrar no corpo, "pescoço")
-			this.scene.translate(0,0,0.5);
-			this.cylinder.display();
-		this.scene.popMatrix();
 		//front Hemisphere
 		this.scene.pushMatrix();
 			this.scene.scale(0.5*0.92,0.5*0.92,0.5*0.92);
@@ -64,5 +49,25 @@ MyTorpedo.prototype.display = function() {
 			this.hemisphere.display();
 		this.scene.popMatrix();	
 	this.scene.popMatrix();
-
+	
+	 //Back Flippers
+    this.scene.pushMatrix();
+    	this.scene.translate(0,-0.7,2.04);
+    	this.scene.scale(0.2,0.2,0.2);
+    	this.scene.translate(0,0,0.15);
+    	this.scene.rotate(180 * degToRad,1, 0, 0);
+    	this.scene.rotate(90 * degToRad,0, 1, 0);
+    	this.scene.pushMatrix();
+	 		this.flipper.display();
+	 	this.scene.popMatrix();
+	 		
+	 	this.scene.pushMatrix();
+	 		this.scene.rotate(90 * degToRad,1,0, 0);
+	 		this.flipper.display();
+	 	this.scene.popMatrix();
+	 
+	this.scene.popMatrix();
 };
+MyTorpedo.prototype.launch = function(){
+	
+}

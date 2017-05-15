@@ -21,6 +21,7 @@ serialInclude([
 	'MyTriangle2.js',
 	'MyProppeller.js',
 	'MyFlipper.js',
+	'MyTorpedo.js',
 	'MySubmarine.js',
 	'MyTarget.js',
 

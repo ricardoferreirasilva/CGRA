@@ -2,9 +2,13 @@
  * MyTarget
  * @constructor
  */
-function MyTarget(scene) {
+function MyTarget(scene, x, y, z) {
     CGFobject.call(this, scene);
-        
+    
+    this.x=x;
+    this.z=z;
+    this.y=y;    
+    
     this.appearence=0;//0 - bullseye, 1 - homer
     this.quad= new MyQuad(scene, 0,1,0,1);
     this.quad.initBuffers();

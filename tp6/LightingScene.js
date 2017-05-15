@@ -39,9 +39,9 @@ LightingScene.prototype.init = function(application) {
     this.submarine = new MySubmarine(this);
     
     //targets
-    this.homer_target = new MyTarget(this);
+    this.homer_target = new MyTarget(this,6,0.1,9);
 	this.homer_target.appearence=1;
-    this.bullseye_target = new MyTarget(this);
+    this.bullseye_target = new MyTarget(this,3,0.1,3);
     this.bullseye_target.appearence=0;
     this.targets=[];
     this.targets[0]=this.homer_target;
@@ -266,11 +266,16 @@ LightingScene.prototype.display = function() {
     
    	//Target
    	this.pushMatrix();
-   		this.translate(3,0.1,3);
-   		this.rotate(-90 * degToRad,1, 0, 0);
-   		this.targets[0].display();
-   		this.translate(3,0,0);
-   		this.targets[1].display();
+   		this.pushMatrix();
+   			this.translate(this.targets[0].x,this.targets[0].y,this.targets[0].z);
+   			this.rotate(-90 * degToRad,1, 0, 0);
+   			this.targets[0].display();
+   		this.popMatrix();
+   		this.pushMatrix();
+   			this.translate(this.targets[1].x,this.targets[1].y,this.targets[1].z);
+   			this.rotate(-90 * degToRad,1, 0, 0);
+   			this.targets[1].display();
+   		this.popMatrix();
    	this.popMatrix();
    	
     // ---- END Primitive drawing section
