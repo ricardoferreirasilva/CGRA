@@ -10,7 +10,8 @@ function MySubmarine(scene) {
     this.x=0;
     this.z=0;
     this.y=0;
-    this.r=2;
+    
+    //Flippers
     this.horizontalFlipperAngle=0;
     this.verticalFlipperAngle=0;
     
@@ -19,7 +20,6 @@ function MySubmarine(scene) {
     this.peri_maxy=6;
     this.peri_miny=-4.5;
     this.peri_speed=0.1;
-    
     
     //proppellers
     this.rightProppellerAngle=0;
@@ -65,9 +65,9 @@ MySubmarine.prototype.constructor = MyTriangle;
 MySubmarine.prototype.display = function() {
 	
 	this.scene.submarineAppearances[this.scene.currSubmarineAppearance].apply();
-	
 	this.scene.translate(this.x,this.y,this.z);
 	this.scene.rotate(this.ver_angle,0, 1, 0);
+	this.scene.rotate(this.hor_angle,1, 0, 0);
 		
 	//Submarine Display
 	this.scene.pushMatrix();
@@ -143,7 +143,7 @@ MySubmarine.prototype.display = function() {
     	this.scene.rotate(180 * degToRad,1, 0, 0);
     	this.scene.rotate(90 * degToRad,0, 1, 0);
     	this.scene.pushMatrix();
-    		this.scene.rotate(this.horizontalFlipperAngle * degToRad,0,0, 1);
+    		this.scene.rotate(-this.horizontalFlipperAngle * degToRad,0,0, 1);
 	 		this.flipper.display();
 	 	this.scene.popMatrix();
 	 		
@@ -186,7 +186,7 @@ MySubmarine.prototype.display = function() {
 		this.scene.popMatrix();
  	this.scene.popMatrix();
  	
-};//rgb - xyz
+};
 
 MySubmarine.prototype.handleKeyDown = function(direction) {
 	switch(direction){
@@ -345,21 +345,28 @@ MySubmarine.prototype.update = function(currTime){
 	
 	//Horizontal Angle update
 	
-	if(!this.moveUp && this.moveDown){
-		this.hor_rotSpeed -= this.hor_rotAc;
-		console.log("hor_rotAC: " + this.hor_rotAc + " hor_rotSpeed: " + this.hor_rotSpeed);
-	}
-	else if(this.moveUp && !this.moveDown){
+	if(this.moveDown){
 		this.hor_rotSpeed += this.hor_rotAc;
 		console.log("hor_rotAC: " + this.hor_rotAc + " hor_rotSpeed: " + this.hor_rotSpeed);
 	}
+	else if(this.moveUp){
+		this.hor_rotSpeed -= this.hor_rotAc;
+		console.log("hor_rotAC: " + this.hor_rotAc + " hor_rotSpeed: " + this.hor_rotSpeed);
+	}
+	
+	this.hor_angle+=this.hor_rotSpeed;
 	
 	//Drag apply
 	
-	if(this.rotSpeed > 0.0000) 
-		this.rotSpeed -= this.rotDrag;
-	else if(this.rotSpeed < 0.0000) 
-		this.rotSpeed += this.rotDrag;
+	if(this.ver_rotSpeed > 0.0000) 
+		this.ver_rotSpeed -= this.ver_rotDrag;
+	else if(this.ver_rotSpeed < 0.0000) 
+		this.ver_rotSpeed += this.ver_rotDrag;
+	
+	if(this.hor_rotSpeed > 0.0000) 
+		this.hor_rotSpeed -= this.hor_rotDrag;
+	else if(this.hor_rotSpeed < 0.0000) 
+		this.hor_rotSpeed += this.hor_rotDrag;
 	
 	if(this.speed > 0.0000) 
 		this.speed-=this.speedDrag;
