@@ -367,10 +367,16 @@ MySubmarine.prototype.update = function(currTime){
 	else if(this.ver_rotSpeed < 0.0000) 
 		this.ver_rotSpeed += this.ver_rotDrag;
 	
-	if(this.hor_rotSpeed > 0.0000) 
+	if(this.hor_rotSpeed > 0.0000)
+	{
 		this.hor_rotSpeed -= this.hor_rotDrag;
-	else if(this.hor_rotSpeed < 0.0000) 
+		this.limitHorizontalAngles();
+	}
+	else if(this.hor_rotSpeed < 0.0000)
+	{
 		this.hor_rotSpeed += this.hor_rotDrag;
+		this.limitHorizontalAngles();
+	}
 	
 	if(this.speed > 0.0000) 
 		this.speed-=this.speedDrag;
@@ -379,12 +385,37 @@ MySubmarine.prototype.update = function(currTime){
 	
 	
 	//Movement Update
+	console.log(this.hor_angle);
 	this.z += Math.cos(this.ver_angle) * this.speed*dt/1000;
 	this.x += Math.sin(this.ver_angle) * this.speed*dt/1000;
-	this.y -= Math.tan(this.ver_angle) * (dt * this.speed / 60000) * Math.cos(this.hor_angle);
+	this.y -= Math.tan(this.hor_angle) * (this.speed *dt/ 1000) * Math.cos(this.hor_angle);
 	
 };
-
+MySubmarine.prototype.limitHorizontalAngles = function(){
+		if(this.y > 1)
+		{
+			if(this.hor_angle > 0.1){
+				this.hor_angle = 0.1;
+				this.hor_rotSpeed = 0;
+			}
+			if(this.hor_angle < -0.1) {
+				this.hor_angle = -0.1;
+				this.hor_rotSpeed = 0;
+			}
+		}
+		else
+		{
+			
+			if(this.hor_angle > 0) {
+				this.hor_angle = 0;
+				this.hor_rotSpeed = 0;
+			}
+			if(this.hor_angle < -0.1) {
+				this.hor_angle = -0.1;
+				this.hor_rotSpeed = 0;
+			}
+		}
+};
 MySubmarine.prototype.periscopeUp = function(){
 	if(this.peri_y<this.peri_maxy)
 		this.peri_y+=this.peri_speed;
