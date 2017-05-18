@@ -201,7 +201,7 @@ MySubmarine.prototype.handleKeyDown = function(direction) {
 	*/
 	case 'left':{
 		this.rotateLeft=true;
-		this.rotateRight=false;
+		//this.rotateRight=false;
 		
 		//rotateFin
 		if(this.verticalFlipperAngle<40){
@@ -212,7 +212,7 @@ MySubmarine.prototype.handleKeyDown = function(direction) {
 	break;
 	case 'right':{
 		this.rotateRight=true;
-		this.rotateLeft=false;
+		//this.rotateLeft=false;
 		
 		//rotateFin
 		if(this.verticalFlipperAngle>-40){
@@ -252,6 +252,7 @@ MySubmarine.prototype.handleKeyUp = function(direction) {
 	switch(direction){
 	case 'left':{
 		this.rotateLeft=false;
+		this.ver_rotSpeed = 0;
 		//rotateFin
 		if(this.verticalFlipperAngle>0){
 			this.verticalFlipperAngle-=5;
@@ -261,6 +262,7 @@ MySubmarine.prototype.handleKeyUp = function(direction) {
 	break;
 	case 'right':{
 		this.rotateRight=false;
+		this.ver_rotSpeed = 0;
 		//rotateFin
 		if(this.verticalFlipperAngle<0){
 			this.verticalFlipperAngle+=5;
@@ -338,13 +340,12 @@ MySubmarine.prototype.update = function(currTime){
 		this.ver_rotSpeed += this.ver_rotAc;
 		console.log("rotAC: " + this.ver_rotAc + " rotSpeed: " + this.ver_rotSpeed);
 	}
-	
-	//Vertical Fin angle update
-	/*if(this.rotateLeft && !this.rotateRight) this.angle-=this.rotSpeed;
-	else if(!this.rotateLeft && this.rotateRight) this.angle+=this.rotSpeed;
-	*/
-	if(!(!this.rotateLeft && !this.rotateRight))
-		this.ver_angle += this.ver_rotSpeed;
+	else if(this.rotateLeft && this.rotateRight){
+		this.ver_rotSpeed += this.ver_rotAc;
+		this.ver_rotSpeed -= this.ver_rotAc;
+		console.log("rotAC: " + this.ver_rotAc + " rotSpeed: " + this.ver_rotSpeed);
+	}
+	this.ver_angle += this.ver_rotSpeed;
 	
 	//Horizontal Angle update
 	
