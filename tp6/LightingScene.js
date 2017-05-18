@@ -289,7 +289,6 @@ LightingScene.prototype.update = function(currTime)
 	}
 	
 	this.submarine.update(currTime);
-	
 	//GUI Appearance choice    
     switch (this.submarineAppearance) {
     case "standard":

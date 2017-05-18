@@ -17,6 +17,8 @@ function MyTorpedo(scene) {
     this.flipper= new MyFlipper(scene);
     
     this.triangle.initBuffers();
+
+	this.hasLaunched = false;
 };
 
 MyTorpedo.prototype = Object.create(CGFobject.prototype);
@@ -69,5 +71,16 @@ MyTorpedo.prototype.display = function() {
 	this.scene.popMatrix();
 };
 MyTorpedo.prototype.launch = function(){
+	this.hasLaunched = true;
 	
+}
+MyTorpedo.prototype.update = function(currTime){
+	this.lastime = this.lastime || currTime;
+ 	var dt = currTime - this.lastime;
+	this.lastime = currTime;
+	if(this.hasLaunched)
+	{
+		this.z += Math.sin(90) * 5*dt/1000;
+	}
+
 }

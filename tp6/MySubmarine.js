@@ -10,7 +10,6 @@ function MySubmarine(scene) {
     this.x=0;
     this.z=0;
     this.y=0;
-    
     //Flippers
     this.horizontalFlipperAngle=0;
     this.verticalFlipperAngle=0;
@@ -188,7 +187,10 @@ MySubmarine.prototype.display = function() {
 		this.scene.popMatrix();
  	this.scene.popMatrix();
  	if(this.showTorpedo)
- 		this.torpedo.display();
+	 {
+
+		this.torpedo.display();
+	 }
 };
 
 MySubmarine.prototype.handleKeyDown = function(direction) {
@@ -298,6 +300,8 @@ MySubmarine.prototype.handleKeyUp = function(direction) {
 }
 
 MySubmarine.prototype.update = function(currTime){
+
+	this.torpedo.update(currTime);
 	this.lastime = this.lastime || currTime;
  	var dt = currTime - this.lastime;
 	this.lastime = currTime;
