@@ -80,13 +80,23 @@ MyTorpedo.prototype.update = function(currTime){
 	this.lastime = currTime;
 	if(this.hasLaunched)
 	{
-
+		//Sub position
 		var subX = this.scene.submarine.x;
 		var subY = this.scene.submarine.y;
 		var subZ = this.scene.submarine.z;
 		var subSpeed = this.scene.submarine.speed;
-		this.z += (Math.sin(90) * 1*dt/1000);
-		//this.z -= (Math.sin(90) * subSpeed*dt/1000);
+		//What we want to increment
+		//var zIncrement = (Math.sin(90) * 1*dt/1000);
+;
+		//this.z += (Math.sin(90) * 1*dt/1000);
+
+		//Real position of the torpedo
+		var realX = subX + this.x;
+		var realY = subY + this.y
+		var realZ = subZ + this.z;
+		console.log("TOR: "+realX+" "+realY + " "+realZ);
+
+		this.z += ((Math.sin(90) * 5*dt/1000) - (Math.sin(90) * subSpeed*dt/1000));
 	}
 
 }
