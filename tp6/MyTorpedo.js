@@ -80,7 +80,13 @@ MyTorpedo.prototype.update = function(currTime){
 	this.lastime = currTime;
 	if(this.hasLaunched)
 	{
-		this.z += Math.sin(90) * 5*dt/1000;
+
+		var subX = this.scene.submarine.x;
+		var subY = this.scene.submarine.y;
+		var subZ = this.scene.submarine.z;
+		var subSpeed = this.scene.submarine.speed;
+		this.z += (Math.sin(90) * 1*dt/1000);
+		//this.z -= (Math.sin(90) * subSpeed*dt/1000);
 	}
 
 }
