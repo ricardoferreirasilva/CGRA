@@ -203,24 +203,22 @@ MySubmarine.prototype.handleKeyDown = function(direction) {
 	*/
 	case 'left':{
 		this.rotateLeft=true;
-		//this.rotateRight=false;
 		
 		//rotateFin
-		if(this.verticalFlipperAngle<40){
+		if(this.verticalFlipperAngle<35){
 			this.verticalFlipperAngle+=1;
 		}
-		else this.verticalFlipperAngle=40;
+		else this.verticalFlipperAngle=35;
 	}
 	break;
 	case 'right':{
 		this.rotateRight=true;
-		//this.rotateLeft=false;
 		
 		//rotateFin
-		if(this.verticalFlipperAngle>-40){
+		if(this.verticalFlipperAngle>-35){
 			this.verticalFlipperAngle-=1;
 		}
-		else this.verticalFlipperAngle=-40;
+		else this.verticalFlipperAngle=-35;
 	}
 	break;
 	case 'forward':{
@@ -256,20 +254,20 @@ MySubmarine.prototype.handleKeyUp = function(direction) {
 		this.rotateLeft=false;
 		this.ver_rotSpeed = 0;
 		//rotateFin
-		if(this.verticalFlipperAngle>0){
+		/*if(this.verticalFlipperAngle>0){
 			this.verticalFlipperAngle-=5;
 		}
-		else this.verticalFlipperAngle=0;
+		else*/ this.verticalFlipperAngle=0;
 	}
 	break;
 	case 'right':{
 		this.rotateRight=false;
 		this.ver_rotSpeed = 0;
 		//rotateFin
-		if(this.verticalFlipperAngle<0){
+		/*if(this.verticalFlipperAngle<0){
 			this.verticalFlipperAngle+=5;
 		}
-		else this.verticalFlipperAngle=0;
+		else */this.verticalFlipperAngle=0;
 	}
 	break;
 	case 'forward':{
@@ -282,6 +280,7 @@ MySubmarine.prototype.handleKeyUp = function(direction) {
 	break;
 	case 'up':{
 		this.moveUp=false;
+		this.hor_rotSpeed=0;
 		if(this.horizontalFlipperAngle<0){
 			this.horizontalFlipperAngle+=5;
 		}
@@ -290,6 +289,7 @@ MySubmarine.prototype.handleKeyUp = function(direction) {
 	break;
 	case 'down':{
 		this.moveDown=false;
+		this.hor_rotSpeed=0;
 		if(this.horizontalFlipperAngle>0){
 			this.horizontalFlipperAngle-=5;
 		}
@@ -336,30 +336,36 @@ MySubmarine.prototype.update = function(currTime){
 		this.leftProppellerAngle-=this.minPropAngle*this.speed*360 * degToRad;
 	}
 	
+	//Vertical angle
 	if(!this.rotateLeft && this.rotateRight){
 		this.ver_rotSpeed -= this.ver_rotAc;
-		console.log("rotAC: " + this.ver_rotAc + " rotSpeed: " + this.ver_rotSpeed);
+		console.log("ver_rotAC: " + this.ver_rotAc + " ver_rotSpeed: " + this.ver_rotSpeed);
 	}
 	else if(this.rotateLeft && !this.rotateRight){
 		this.ver_rotSpeed += this.ver_rotAc;
-		console.log("rotAC: " + this.ver_rotAc + " rotSpeed: " + this.ver_rotSpeed);
+		console.log("ver_rotAC: " + this.ver_rotAc + " ver_rotSpeed: " + this.ver_rotSpeed);
 	}
 	else if(this.rotateLeft && this.rotateRight){
 		this.ver_rotSpeed += this.ver_rotAc;
 		this.ver_rotSpeed -= this.ver_rotAc;
-		console.log("rotAC: " + this.ver_rotAc + " rotSpeed: " + this.ver_rotSpeed);
+		console.log("ver_rotAC: " + this.ver_rotAc + " ver_rotSpeed: " + this.ver_rotSpeed);
 	}
 	this.ver_angle += this.ver_rotSpeed;
 	
 	//Horizontal Angle update
 	
-	if(this.moveDown){
+	if(this.moveDown && !this.moveUp){
 		this.hor_rotSpeed += this.hor_rotAc;
 		console.log("hor_rotAC: " + this.hor_rotAc + " hor_rotSpeed: " + this.hor_rotSpeed);
 	}
-	else if(this.moveUp){
+	else if(this.moveUp && !this.moveDown){
 		this.hor_rotSpeed -= this.hor_rotAc;
 		console.log("hor_rotAC: " + this.hor_rotAc + " hor_rotSpeed: " + this.hor_rotSpeed);
+	}
+	else if(this.moveUp && this.moveDown){
+		this.hor_rotSpeed += this.hor_rotAc;
+		this.hor_rotSpeed -= this.hor_rotAc;
+		console.log("hor_rotAC: " + this.ver_rotAc + " hor_rotSpeed: " + this.ver_rotSpeed);
 	}
 	
 	this.hor_angle+=this.hor_rotSpeed;
@@ -390,32 +396,31 @@ MySubmarine.prototype.update = function(currTime){
 	
 	//Movement Update
 	console.log(this.hor_angle);
-	this.z += Math.cos(this.ver_angle) * this.speed*dt/1000;
-	this.x += Math.sin(this.ver_angle) * this.speed*dt/1000;
-	this.y -= Math.tan(this.hor_angle) * (this.speed *dt/ 1000) * Math.cos(this.hor_angle);
+	this.z += Math.cos(this.ver_angle) * (this.speed*dt/1000);
+	this.x += Math.sin(this.ver_angle) * (this.speed*dt/1000);
+	this.y -= Math.sin(this.hor_angle) * (this.speed *dt/ 1000);
 	
 };
 MySubmarine.prototype.limitHorizontalAngles = function(){
 		if(this.y > 1)
 		{
-			if(this.hor_angle > 0.1){
-				this.hor_angle = 0.1;
+			if(this.hor_angle > 0.5){
+				this.hor_angle = 0.5;
 				this.hor_rotSpeed = 0;
 			}
-			if(this.hor_angle < -0.1) {
-				this.hor_angle = -0.1;
+			if(this.hor_angle < -0.5) {
+				this.hor_angle = -0.5;
 				this.hor_rotSpeed = 0;
 			}
 		}
 		else
-		{
-			
-			if(this.hor_angle > 0) {
-				this.hor_angle = 0;
+		{	
+			if(this.hor_angle > 0.5) {
+				this.hor_angle = 0.5;
 				this.hor_rotSpeed = 0;
 			}
-			if(this.hor_angle < -0.1) {
-				this.hor_angle = -0.1;
+			if(this.hor_angle < -0.5) {
+				this.hor_angle = -0.5;
 				this.hor_rotSpeed = 0;
 			}
 		}
