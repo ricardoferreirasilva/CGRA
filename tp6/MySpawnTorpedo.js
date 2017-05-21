@@ -19,8 +19,9 @@ function MySpawnTorpedo(scene,x,y,z, hor_angle, ver_angle) {
 MySpawnTorpedo.prototype = Object.create(CGFobject.prototype);
 MySpawnTorpedo.prototype.constructor = MyTriangle;
 MySpawnTorpedo.prototype.display = function() {
+       //this.scene.translate(this.x,this.y,this.z);
 	 this.scene.pushMatrix();
-     	this.scene.scale(1,1,1);
+
         this.scene.translate(this.torpedo.x, this.torpedo.y, -this.torpedo.z);
         this.scene.rotate(this.torpedo.ver_angle,0, 1, 0);
 	    this.scene.rotate(this.torpedo.hor_angle,1, 0, 0);
@@ -32,5 +33,11 @@ MySpawnTorpedo.prototype.display = function() {
 	
 };
 MySpawnTorpedo.prototype.update = function(currTime){
+    console.log("launch");
     var bool = this.torpedo.update(currTime);
+    this.lastime = this.lastime || currTime;
+ 	var dt = currTime - this.lastime;
+	this.lastime = currTime;
+    this.torpedo.launch();
+   
 }

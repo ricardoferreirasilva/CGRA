@@ -64,9 +64,8 @@ MyTorpedo.prototype.display = function() {
 	 	this.scene.popMatrix();
  	this.scene.popMatrix();
 	this.scene.translate(this.x,this.y,this.z);
-	this.scene.rotate(this.ver_angle*degToRad,0, 1, 0);
-	this.scene.rotate(this.hor_angle*degToRad,1, 0, 0);
-	this.scene.scale(1,1,-1);
+	this.scene.rotate(this.ver_angle,0, 1, 0);
+	this.scene.rotate(this.hor_angle,1, 0, 0);
 	
 };
 MyTorpedo.prototype.launch = function(){
@@ -79,23 +78,12 @@ MyTorpedo.prototype.update = function(currTime){
 	this.lastime = currTime;
 	if(this.hasLaunched)
 	{
-		//Sub position
-		var subX = this.scene.submarine.x;
-		var subY = this.scene.submarine.y;
-		var subZ = this.scene.submarine.z;
-		var subSpeed = this.scene.submarine.speed;
-		//What we want to increment
-		//var zIncrement = (Math.sin(90) * 1*dt/1000);
 
-		//this.z += (Math.sin(90) * 1*dt/1000);
 
-		//Real position of the torpedo
-		var realX = subX + this.x;
-		var realY = subY + this.y
-		var realZ = subZ + this.z;
-		//console.log("TOR: "+realX+" "+realY + " "+realZ);
-
-		this.z += ((Math.sin(90) * 5*dt/1000) - (Math.sin(90) * subSpeed*dt/1000));
+		//this.z += ((Math.sin(90) * 5*dt/1000) - (Math.sin(90) * subSpeed*dt/1000));
+		this.x += Math.cos(this.ver_angle) * (2*dt/1000);
+		this.z += Math.sin(this.ver_angle) * (2*dt/1000);
+		this.y -= Math.sin(this.hor_angle) * (2 *dt/ 1000);
 	}
 
 }

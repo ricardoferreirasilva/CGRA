@@ -383,6 +383,7 @@ LightingScene.prototype.launchTorpedo = function()
     this.torpedo = new MySpawnTorpedo(this,this.submarine.x,this.submarine.y,this.submarine.z, this.submarine.hor_angle, this.submarine.ver_angle);
     console.log("TOR: " + this.torpedo.x + " " +  this.torpedo.y + " " +  this.torpedo.z + " ");
     console.log("SUB: " + this.submarine.x + " " +  this.submarine.y + " " +  this.submarine.z + " ");
+    this.torpedo.update();
     //this.showTorpedo = true;
 }
 
