@@ -33,8 +33,8 @@
              this.normals.push(Math.sin(angIncrement * i));
              this.normals.push(0);
              
-             this.texCoords.push(i / this.slices, 1 - j / this.stacks);
-             
+        	 this.texCoords.push(i / this.slices, 1 - j / this.stacks);
+
              if (j < this.stacks) 
              {
                  if (i == this.slices - 1) 

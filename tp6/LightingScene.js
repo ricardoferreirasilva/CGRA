@@ -37,15 +37,25 @@ LightingScene.prototype.init = function(application) {
     this.pointer = new MyPointer(this,1);
     this.clock = new MyClock(this, 12, 1);
     this.submarine = new MySubmarine(this);
+    this.background = new MyCylinder(this, 20,8);
     
     //targets
-    this.homer_target = new MyTarget(this,6,0.1,9);
-	this.homer_target.appearence=1;
-    this.bullseye_target = new MyTarget(this,3,0.1,3);
-    this.bullseye_target.appearence=0;
+    this.homer_target = new MyTarget(this,1,0.5,1);
+	this.homer_target.appearence=0;
+    this.bullseye_target = new MyTarget(this,3,0.5,3);
+    this.bullseye_target.appearence=1;
+    this.naperon_target= new MyTarget(this, 8, 0.5, 4);
+    this.naperon_target.appearence=2;
+    this.metal_target= new MyTarget(this, 6,0.5,6);
+    this.metal_target.appearence=3;
+    this.sponge_target= new MyTarget(this, 1,0.5,4);
+    this.sponge_target.appearence=4;
     this.targets=[];
     this.targets[0]=this.homer_target;
     this.targets[1]=this.bullseye_target;
+    this.targets[2]=this.naperon_target;
+    this.targets[3]=this.metal_target;
+    this.targets[4]=this.sponge_target;
     
     // Materials
     this.materialDefault = new CGFappearance(this);
@@ -104,45 +114,79 @@ LightingScene.prototype.init = function(application) {
 	this.windowAppearance.setTextureWrap('REPEAT', 'REPEAT');
     this.bottomOceanAppearance.loadTexture("../tp6/fundo_oceano.jpg");
     
-    this.poleTexture=new CGFappearance(this);
-	this.poleTexture.setAmbient(0.1, 0.1, 0.1, 0.1);
-	this.poleTexture.setDiffuse(0.1, 0.1, 0.1, 0.2);
-	this.poleTexture.setSpecular(1, 1, 1, 0.3);
-	this.poleTexture.setShininess(50);
-    this.poleTexture.loadTexture("../tp6/metal2.png");
+    this.metal_darkAppearence=new CGFappearance(this);
+	this.metal_darkAppearence.setAmbient(0.1, 0.1, 0.1, 0.1);
+	this.metal_darkAppearence.setDiffuse(1,1, 1, 0.2);
+	this.metal_darkAppearence.setSpecular(1, 1, 1, 0.3);
+	this.metal_darkAppearence.setShininess(50);
+    this.metal_darkAppearence.loadTexture("../tp6/metal_dark.png");
     
     this.metalAppearence= new CGFappearance(this);
     this.metalAppearence.setAmbient(1, 1, 1, 0.1);
-	this.metalAppearence.setDiffuse(0.1, 0.1, 0.1, 0.2);
+	this.metalAppearence.setDiffuse(1, 1, 1, 0.2);
 	this.metalAppearence.setSpecular(1, 1, 1, 0.3);
 	this.metalAppearence.setShininess(50);
 	this.metalAppearence.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
-    this.metalAppearence.loadTexture("../tp6/metal.png");
+    this.metalAppearence.loadTexture("../tp6/metal.jpg");
      
-    this.submarineAppearance = this.materialDefault;
-    this.submarineAppearances=[];
-    this.submarineAppearances[0]=this.materialDefault;
-    this.submarineAppearances[1]=this.floorAppearance;
-    this.submarineAppearances[2]=this.metalAppearence;
+    this.metal_comicsAppearence= new CGFappearance(this);
+    this.metal_comicsAppearence.setAmbient(1, 1, 1, 0.1);
+	this.metal_comicsAppearence.setDiffuse(1, 1, 1, 0.2);
+	this.metal_comicsAppearence.setSpecular(1, 1, 1, 0.3);
+	this.metal_comicsAppearence.setShininess(50);
+	this.metal_comicsAppearence.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+    this.metal_comicsAppearence.loadTexture("../tp6/metal_comics.jpg");
+    
+    this.metal_rustyAppearence= new CGFappearance(this);
+    this.metal_rustyAppearence.setAmbient(1, 1, 1, 0.1);
+	this.metal_rustyAppearence.setDiffuse(1, 1, 1, 0.2);
+	this.metal_rustyAppearence.setSpecular(1, 1, 1, 0.3);
+	this.metal_rustyAppearence.setShininess(50);
+	this.metal_rustyAppearence.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+    this.metal_rustyAppearence.loadTexture("../tp6/metal_rusty.png");
     
     this.homerAppearence= new CGFappearance(this);
     this.homerAppearence.setAmbient(1, 1, 1, 0.1);
-	this.homerAppearence.setDiffuse(0.1, 0.1, 0.1, 0.2);
+	this.homerAppearence.setDiffuse(1, 1, 1, 0.2);
 	this.homerAppearence.setSpecular(1, 1, 1, 0.3);
 	this.homerAppearence.setShininess(50);
     this.homerAppearence.loadTexture("../tp6/homer.png");
     
     this.bullseyeAppearence= new CGFappearance(this);
     this.bullseyeAppearence.setAmbient(1, 1, 1, 0.1);
-	this.bullseyeAppearence.setDiffuse(0.1, 0.1, 0.1, 0.2);
+	this.bullseyeAppearence.setDiffuse(1, 1, 1, 0.2);
 	this.bullseyeAppearence.setSpecular(1, 1, 1, 0.3);
 	this.bullseyeAppearence.setShininess(50);
     this.bullseyeAppearence.loadTexture("../tp6/bullseye.jpg");
     
-    this.currSubmarineAppearance=0; // indica o indice da textura atual do submarino
-    this.submarineAppearanceList= ['standard','wood', 'metal'];
+    this.spongeAppearence= new CGFappearance(this);
+    this.spongeAppearence.setAmbient(1, 1, 1, 0.1);
+	this.spongeAppearence.setDiffuse(1, 1,1, 0.2);
+	this.spongeAppearence.setSpecular(1, 1, 1, 0.3);
+	this.spongeAppearence.setShininess(50);
+	this.spongeAppearence.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+    this.spongeAppearence.loadTexture("../tp6/sponge.jpg");
     
-   
+    this.naperonAppearence= new CGFappearance(this);
+    this.naperonAppearence.setAmbient(1, 1, 1, 0.1);
+	this.naperonAppearence.setDiffuse(1,1, 1, 0.2);
+	this.naperonAppearence.setSpecular(1, 1, 1, 0.3);
+	this.naperonAppearence.setShininess(50);
+    this.naperonAppearence.loadTexture("../tp6/naperon.png");
+
+    this.submarineAppearance = this.materialDefault;
+    this.submarineAppearances=[];
+    this.submarineAppearances[0]=this.materialDefault;
+    this.submarineAppearances[1]=this.floorAppearance;
+    this.submarineAppearances[2]=this.metalAppearence;
+    this.submarineAppearances[3]=this.metal_darkAppearence;
+    this.submarineAppearances[4]=this.metal_comicsAppearence;
+    this.submarineAppearances[5]=this.metal_rustyAppearence;
+    this.submarineAppearances[6]=this.spongeAppearence;
+    
+    this.currSubmarineAppearance=0; // indica o indice da textura atual do submarino
+    this.submarineAppearanceList= ['standard','wood', 'metal', 'dark metal', 'comics metal', 'rusty metal', 'sponge'];
+ 
     this.setUpdatePeriod(1/60);
     
     this.luz0=false
@@ -236,25 +280,25 @@ LightingScene.prototype.display = function() {
     // Floor
     this.bottomOceanAppearance.apply();  
     this.pushMatrix();
-    this.translate(7.5, 0, 7.5);
-    this.rotate(-90 * degToRad, 1, 0, 0);
-    this.scale(15, 15, 0.2);
-    this.floor.display();
+	    this.translate(7.5, 0, 7.5);
+	    this.rotate(-90 * degToRad, 1, 0, 0);
+	    this.scale(15, 15, 0.2);
+	    this.floor.display();
     this.popMatrix();
     
     //Clock
     this.pushMatrix();
-    this.translate(8,5,0);
-	this.scale(0.7,0.7,0.3);
-    this.clock.display();
+	    this.translate(8,5,0);
+		this.scale(0.7,0.7,0.3);
+	    this.clock.display();
     this.popMatrix();
 
     //Poste AKA Cylinder
     this.pushMatrix();
-    this.translate(8,0,0.15);
-    this.rotate(-90 * degToRad,1, 0, 0);
-    this.scale(0.1,0.1,4.5);
-    this.cilinder.display();
+	    this.translate(8,0,0.15);
+	    this.rotate(-90 * degToRad,1, 0, 0);
+	    this.scale(0.1,0.1,4.5);
+	    this.cilinder.display();
     this.popMatrix();
 
     //Submarino
@@ -265,19 +309,20 @@ LightingScene.prototype.display = function() {
    	this.popMatrix();
     
    	//Target
-   	this.pushMatrix();
-   		this.pushMatrix();
-   			this.translate(this.targets[0].x,this.targets[0].y,this.targets[0].z);
-   			this.rotate(-90 * degToRad,1, 0, 0);
-   			this.targets[0].display();
-   		this.popMatrix();
-   		this.pushMatrix();
-   			this.translate(this.targets[1].x,this.targets[1].y,this.targets[1].z);
-   			this.rotate(-90 * degToRad,1, 0, 0);
-   			this.targets[1].display();
-   		this.popMatrix();
-   	this.popMatrix();
+
+	for(i=0;i<5;i++){
+		this.pushMatrix();
+			this.translate(this.targets[i].x,this.targets[i].y,this.targets[i].z);
+			this.targets[i].display();
+		this.popMatrix();
+	}
    	
+   	/*
+   	//BackGround
+   	this.pushMatrix();
+   		this.scale(100,100,100);
+   		this.background.display();
+   	this.popMatrix();*/
     // ---- END Primitive drawing section
 }
 LightingScene.prototype.update = function(currTime)
@@ -287,8 +332,7 @@ LightingScene.prototype.update = function(currTime)
 		this.clock.update(currTime);
         this.cFrame++;
 	}
-	
-	this.submarine.update(currTime);
+   this.submarine.update(currTime);
 	//GUI Appearance choice    
     switch (this.submarineAppearance) {
     case "standard":
@@ -300,5 +344,17 @@ LightingScene.prototype.update = function(currTime)
     case "metal":
         this.currSubmarineAppearance = 2;
         break;
+    case "dark metal":
+    	this.currSubmarineAppearance=3;
+    	break;
+    case "comics metal":
+    	this.currSubmarineAppearance=4;
+    	break;
+    case "rusty metal":
+    	this.currSubmarineAppearance=5;
+    	break;
+    case "sponge":
+    	this.currSubmarineAppearance=6;
+    	break;
     }
 }
