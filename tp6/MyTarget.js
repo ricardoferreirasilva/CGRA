@@ -8,7 +8,7 @@ function MyTarget(scene, x, y, z) {
     this.x=x;
     this.z=z;
     this.y=y;    
-    
+    this.exploded = false;
     this.appearence=0;//0 - bullseye, 1 - homer
     this.cube= new MyUnitCubeQuad(scene, 0,1,0,1);
     this.cube.initBuffers();

@@ -8,7 +8,7 @@ function MyTorpedo(scene,x,y,z, hor_angle, ver_angle) {
     this.x=x;
     this.z=z;
     this.y=y;
-    
+    this.exploded = false;
     this.startx=x;
     this.starty=y;
     this.startz=z;
@@ -26,7 +26,7 @@ function MyTorpedo(scene,x,y,z, hor_angle, ver_angle) {
 	this.p2;
 	this.p3;
 	this.p4;
-	
+	this.target;
 	this.benzierT;
 	this.benzierDistance;
 	
@@ -87,7 +87,7 @@ MyTorpedo.prototype.launch = function(){
 	this.hasLaunched = true;
 	
 }
-MyTorpedo.prototype.calculateBenzierPoints = function(tX,tY,tZ){
+MyTorpedo.prototype.calculateBenzierPoints = function(tX,tY,tZ,target){
 	if(!this.benzierCalculated)
 	{
 		console.log("T "+tX+" "+tY+" "+tZ);
@@ -99,6 +99,7 @@ MyTorpedo.prototype.calculateBenzierPoints = function(tX,tY,tZ){
 		this.benzierDistance = Math.sqrt( Math.pow((tX-this.x),2) + Math.pow((tY-this.y),2) + Math.pow((tZ-this.z),2));
 		console.log("Distance: " + this.benzierDistance);
 		this.benzierCalculated = true;
+		this.target = target;
 	}
 	
 }
@@ -110,7 +111,7 @@ MyTorpedo.prototype.update = function(currTime){
 	{
 		//console.log("TIME: "+this.lastime);
 		//this.benzierT +=  1/(1000/dt * this.benzierDistance);
-		this.benzierT += 0.002
+		this.benzierT += 0.005;
 
 		var newX = (Math.pow((1-this.benzierT),3)*this.p1.x) + (3*Math.pow((1-this.benzierT),2)*this.benzierT*this.p2.x) + (3*(1-this.benzierT)*Math.pow(this.benzierT,2)*this.p3.x) + (Math.pow(this.benzierT,3)*this.p3.x);
 		var newY = (Math.pow((1-this.benzierT),3)*this.p1.y) + (3*Math.pow((1-this.benzierT),2)*this.benzierT*this.p2.y) + (3*(1-this.benzierT)*Math.pow(this.benzierT,2)*this.p3.y) + (Math.pow(this.benzierT,3)*this.p3.y);
@@ -134,11 +135,13 @@ MyTorpedo.prototype.update = function(currTime){
 				this.y = newX;
 				this.z = newX;
 		}
-		else if(this.benzierT == 1)
+		else if(this.benzierT > 1)
 		{
 				this.x = this.p4.x;
 				this.y = this.p4.y;
 				this.z = this.p4.z;
+				this.exploded = true;
+				if(this.target != null) this.target.exploded = true;
 		}
 	}
 

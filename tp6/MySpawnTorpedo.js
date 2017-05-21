@@ -23,7 +23,7 @@ MySpawnTorpedo.prototype.display = function() {
 	 	this.scene.translate(this.torpedo.x,this.torpedo.y,this.torpedo.z);
 		this.scene.rotate(this.torpedo.hor_bezier+Math.PI,0, 1, 0);
 		this.scene.rotate(this.torpedo.ver_bezier,1, 0, 0);
-       this.torpedo.display();
+        if(!this.torpedo.exploded)this.torpedo.display();
     this.scene.popMatrix();
 	
 };

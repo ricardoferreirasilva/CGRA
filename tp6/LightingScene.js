@@ -328,7 +328,7 @@ LightingScene.prototype.display = function() {
 	for(i=0;i<5;i++){
 		this.pushMatrix();
 			this.translate(this.targets[i].x,this.targets[i].y,this.targets[i].z);
-			this.targets[i].display();
+			if(!this.targets[i].exploded) this.targets[i].display();
 		this.popMatrix();
 	}
 	
@@ -347,7 +347,7 @@ LightingScene.prototype.display = function() {
                 this.currentTargetY = this.targets[c].y;
                 this.currentTargetZ = this.targets[c].z;
                 c++;
-                this.torpedoStock[i].torpedo.calculateBenzierPoints( this.currentTargetX, this.currentTargetY, this.currentTargetZ);
+                this.torpedoStock[i].torpedo.calculateBenzierPoints( this.currentTargetX, this.currentTargetY, this.currentTargetZ,this.targets[c]);
                 this.torpedoStock[i].display();
             }
         }
