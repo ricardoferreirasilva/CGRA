@@ -8,15 +8,24 @@ function MyTorpedo(scene,x,y,z, hor_angle, ver_angle) {
     this.x=x;
     this.z=z;
     this.y=y;
+    
     this.ver_angle=ver_angle;
     this.hor_angle=hor_angle;
+    
+    this.hor_bezier = hor_angle-Math.PI;
+	this.ver_bezier = ver_angle;
+	this.deltadis = {x : 0, y : 0 , z : 0 };
+	
 	this.benzierCalculated = false;
+	
     this.p1;
 	this.p2;
 	this.p3;
 	this.p4;
+	
 	this.benzierT;
 	this.benzierDistance;
+	
     this.triangle= new MyTriangle(scene);
     this.hemisphere= new MyHemiSphere(scene,20,8);
     this.cylinder= new MyCylinder(scene,20,1);
@@ -70,8 +79,8 @@ MyTorpedo.prototype.display = function() {
 	 	this.scene.popMatrix();
  	this.scene.popMatrix();
 	this.scene.translate(this.x,this.y,this.z);
-	this.scene.rotate(this.ver_angle,0, 1, 0);
-	this.scene.rotate(this.hor_angle,1, 0, 0);
+	this.scene.rotate(this.hor_bezier+Math.PI,0, 1, 0);
+	this.scene.rotate(this.ver_bezier,1, 0, 0);
 	
 };
 MyTorpedo.prototype.launch = function(){
@@ -101,17 +110,18 @@ MyTorpedo.prototype.update = function(currTime){
 		console.log("TIME: "+this.lastime);
 		//this.benzierT +=  1/(1000/dt * this.benzierDistance);
 		this.benzierT += 0.002
-		//console.log(this.benzierT);
-		//this.z += ((Math.sin(90) * 5*dt/1000) - (Math.sin(90) * subSpeed*dt/1000));
-		//this.x += Math.cos(this.ver_angle) * (2*dt/1000);
-		//this.z += Math.sin(this.ver_angle) * (2*dt/1000);
-		//this.y -= Math.sin(this.hor_angle) * (2 *dt/ 1000);
 
+		var newX = (this.p1.x * Math.pow((1-this.benzierT),3)) + (this.p2.x* 3*this.benzierT*Math.pow((1-this.benzierT),2) + (this.p3.x * 3 * Math.pow(this.benzierT,2)*(1-this.benzierT))+(this.p4.x * Math.pow(this.benzierT,3)));
+		var newY = (this.p1.y * Math.pow((1-this.benzierT),3)) + (this.p2.y* 3*this.benzierT*Math.pow((1-this.benzierT),2) + (this.p3.y * 3 * Math.pow(this.benzierT,2)*(1-this.benzierT))+(this.p4.y * Math.pow(this.benzierT,3)));
+		var newZ = (this.p1.z * Math.pow((1-this.benzierT),3)) + (this.p2.z* 3*this.benzierT*Math.pow((1-this.benzierT),2) + (this.p3.z * 3 * Math.pow(this.benzierT,2)*(1-this.benzierT))+(this.p4.z * Math.pow(this.benzierT,3)));
+
+		this.deltadis = {x : (this.x-newX), y: (this.y-newY), z: (this.z-newZ)};
+		
+		this.hor_bezier = Math.atan2(this.deltadis.x, this.deltadis.z);
+		this.ver_bezier = Math.atan2(Math.abs(this.deltadis.y), Math.abs(this.deltadis.z));
+		
 		if(this.benzierT < 1)
 		{
-			var newX = (this.p1.x * Math.pow((1-this.benzierT),3)) + (this.p2.x* 3*this.benzierT*Math.pow((1-this.benzierT),2) + (this.p3.x * 3 * Math.pow(this.benzierT,2)*(1-this.benzierT))+(this.p4.x * Math.pow(this.benzierT,3)));
-			var newY = (this.p1.y * Math.pow((1-this.benzierT),3)) + (this.p2.y* 3*this.benzierT*Math.pow((1-this.benzierT),2) + (this.p3.y * 3 * Math.pow(this.benzierT,2)*(1-this.benzierT))+(this.p4.y * Math.pow(this.benzierT,3)));
-			var newZ = (this.p1.z * Math.pow((1-this.benzierT),3)) + (this.p2.z* 3*this.benzierT*Math.pow((1-this.benzierT),2) + (this.p3.z * 3 * Math.pow(this.benzierT,2)*(1-this.benzierT))+(this.p4.z * Math.pow(this.benzierT,3)));
 			console.log(newX + " " + newY + " " + newZ);
 				this.x = newX;
 				this.y = newX;
