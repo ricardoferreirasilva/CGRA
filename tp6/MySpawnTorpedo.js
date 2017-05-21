@@ -20,14 +20,10 @@ MySpawnTorpedo.prototype.constructor = MyTriangle;
 MySpawnTorpedo.prototype.display = function() {
        //this.scene.translate(this.x,this.y,this.z);
 	 this.scene.pushMatrix();
-
-        this.scene.translate(this.torpedo.x, this.torpedo.y, this.torpedo.z);
-        this.scene.rotate(this.torpedo.ver_angle,0, 1, 0);
-	    this.scene.rotate(this.torpedo.hor_angle,1, 0, 0);
-	
-       
-        
-        this.torpedo.display();
+	 	this.scene.translate(this.torpedo.x,this.torpedo.y,this.torpedo.z);
+		this.scene.rotate(this.torpedo.hor_bezier+Math.PI,0, 1, 0);
+		this.scene.rotate(this.torpedo.ver_bezier,1, 0, 0);
+       this.torpedo.display();
     this.scene.popMatrix();
 	
 };

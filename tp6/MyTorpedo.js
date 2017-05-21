@@ -78,9 +78,6 @@ MyTorpedo.prototype.display = function() {
 	 		this.flipper.display();
 	 	this.scene.popMatrix();
  	this.scene.popMatrix();
-	this.scene.translate(this.x,this.y,this.z);
-	this.scene.rotate(this.hor_bezier+Math.PI,0, 1, 0);
-	this.scene.rotate(this.ver_bezier,1, 0, 0);
 	
 };
 MyTorpedo.prototype.launch = function(){
