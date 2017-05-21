@@ -10,7 +10,13 @@ function MyTorpedo(scene,x,y,z, hor_angle, ver_angle) {
     this.y=y;
     this.ver_angle=ver_angle;
     this.hor_angle=hor_angle;
-    
+	this.benzierCalculated = false;
+    this.p1;
+	this.p2;
+	this.p3;
+	this.p4;
+	this.benzierT;
+	this.benzierDistance;
     this.triangle= new MyTriangle(scene);
     this.hemisphere= new MyHemiSphere(scene,20,8);
     this.cylinder= new MyCylinder(scene,20,1);
@@ -72,18 +78,45 @@ MyTorpedo.prototype.launch = function(){
 	this.hasLaunched = true;
 	
 }
+MyTorpedo.prototype.calculateBenzierPoints = function(tX,tY,tZ){
+	if(!this.benzierCalculated)
+	{
+		this.p1 = {x: this.x,y:this.y,z:this.z};
+		this.p2 = { x: this.x+6*Math.cos(this.ver_angle)*Math.sin(this.hor_angle) , y: this.y-6*Math.sin (this.ver_angle), z: this.z+6*Math.cos(this.ver_angle)*Math.cos(this.hor_angle)};
+		this.p3 = {x: tX,y:tY+3,z:tZ};
+		this.p4 = {x: tX,y:tY,z:tZ};
+		this.benzierT = 0;
+		this.benzierDistance = Math.sqrt( Math.pow((tX-this.x),2) + Math.pow((tY-this.y),2) + Math.pow((tZ-this.z),2));
+		console.log("Distance: " + this.benzierDistance);
+		this.benzierCalculated = true;
+	}
+	
+}
 MyTorpedo.prototype.update = function(currTime){
 	this.lastime = this.lastime || currTime;
  	var dt = currTime - this.lastime;
 	this.lastime = currTime;
-	if(this.hasLaunched)
+	if(this.hasLaunched && this.benzierCalculated)
 	{
-
-
+		console.log("TIME: "+this.lastime);
+		//this.benzierT +=  1/(1000/dt * this.benzierDistance);
+		this.benzierT += 0.002
+		//console.log(this.benzierT);
 		//this.z += ((Math.sin(90) * 5*dt/1000) - (Math.sin(90) * subSpeed*dt/1000));
-		this.x += Math.cos(this.ver_angle) * (2*dt/1000);
-		this.z += Math.sin(this.ver_angle) * (2*dt/1000);
-		this.y -= Math.sin(this.hor_angle) * (2 *dt/ 1000);
+		//this.x += Math.cos(this.ver_angle) * (2*dt/1000);
+		//this.z += Math.sin(this.ver_angle) * (2*dt/1000);
+		//this.y -= Math.sin(this.hor_angle) * (2 *dt/ 1000);
+
+		if(this.benzierT < 1)
+		{
+			var newX = (this.p1.x * Math.pow((1-this.benzierT),3)) + (this.p2.x* 3*this.benzierT*Math.pow((1-this.benzierT),2) + (this.p3.x * 3 * Math.pow(this.benzierT,2)*(1-this.benzierT))+(this.p4.x * Math.pow(this.benzierT,3)));
+			var newY = (this.p1.y * Math.pow((1-this.benzierT),3)) + (this.p2.y* 3*this.benzierT*Math.pow((1-this.benzierT),2) + (this.p3.y * 3 * Math.pow(this.benzierT,2)*(1-this.benzierT))+(this.p4.y * Math.pow(this.benzierT,3)));
+			var newZ = (this.p1.z * Math.pow((1-this.benzierT),3)) + (this.p2.z* 3*this.benzierT*Math.pow((1-this.benzierT),2) + (this.p3.z * 3 * Math.pow(this.benzierT,2)*(1-this.benzierT))+(this.p4.z * Math.pow(this.benzierT,3)));
+			console.log(newX + " " + newY + " " + newZ);
+				this.x = newX;
+				this.y = newX;
+				this.z = newX;
+		}
 	}
 
 }

@@ -38,6 +38,7 @@ LightingScene.prototype.init = function(application) {
     this.clock = new MyClock(this, 12, 1);
     this.submarine = new MySubmarine(this);
     this.torpedo;
+    this.torpedoStock = [];
     this.showTorpedo=false;
     this.background = new MyCylinder(this, 8,20);
     
@@ -330,6 +331,10 @@ LightingScene.prototype.display = function() {
 	this.pushMatrix();
 		if(this.torpedo != null)
 			this.torpedo.display();
+        for(var i=0;i<this.torpedoStock.length;i++)
+        {
+            if(this.torpedoStock[i]!= null) this.torpedoStock[i].display();
+        }
 	this.popMatrix();
    	
    	/*
@@ -352,6 +357,11 @@ LightingScene.prototype.update = function(currTime)
 	}
     this.submarine.update(currTime);
 	if(this.torpedo != null) this.torpedo.update(currTime);
+    for(var i=0;i<this.torpedoStock.length;i++)
+    {
+        if(this.torpedoStock[i]!= null) this.torpedoStock[i].update(currTime);
+    }
+    
 	
 	//GUI Appearance choice    
     switch (this.submarineAppearance) {
@@ -380,10 +390,11 @@ LightingScene.prototype.update = function(currTime)
 }
 LightingScene.prototype.launchTorpedo = function()
 {
-    this.torpedo = new MySpawnTorpedo(this,this.submarine.x,this.submarine.y,this.submarine.z, this.submarine.hor_angle, this.submarine.ver_angle);
-    console.log("TOR: " + this.torpedo.x + " " +  this.torpedo.y + " " +  this.torpedo.z + " ");
-    console.log("SUB: " + this.submarine.x + " " +  this.submarine.y + " " +  this.submarine.z + " ");
-    this.torpedo.update();
+    //this.torpedo = new MySpawnTorpedo(this,this.submarine.x,this.submarine.y,this.submarine.z, this.submarine.hor_angle, this.submarine.ver_angle);
+    //console.log("TOR: " + this.torpedo.x + " " +  this.torpedo.y + " " +  this.torpedo.z + " ");
+    //sconsole.log("SUB: " + this.submarine.x + " " +  this.submarine.y + " " +  this.submarine.z + " ");
+    this.torpedoStock.push(new MySpawnTorpedo(this,this.submarine.x,this.submarine.y,this.submarine.z, this.submarine.hor_angle, this.submarine.ver_angle,10,10,0));
+    console.log(this.torpedoStock.length);
     //this.showTorpedo = true;
 }
 

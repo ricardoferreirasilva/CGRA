@@ -336,16 +336,16 @@ MySubmarine.prototype.update = function(currTime){
 	//Vertical angle
 	if(!this.rotateLeft && this.rotateRight){
 		this.ver_rotSpeed -= this.ver_rotAc;
-		console.log("ver_rotAC: " + this.ver_rotAc + " ver_rotSpeed: " + this.ver_rotSpeed);
+		//console.log("ver_rotAC: " + this.ver_rotAc + " ver_rotSpeed: " + this.ver_rotSpeed);
 	}
 	else if(this.rotateLeft && !this.rotateRight){
 		this.ver_rotSpeed += this.ver_rotAc;
-		console.log("ver_rotAC: " + this.ver_rotAc + " ver_rotSpeed: " + this.ver_rotSpeed);
+		//console.log("ver_rotAC: " + this.ver_rotAc + " ver_rotSpeed: " + this.ver_rotSpeed);
 	}
 	else if(this.rotateLeft && this.rotateRight){
 		this.ver_rotSpeed += this.ver_rotAc;
 		this.ver_rotSpeed -= this.ver_rotAc;
-		console.log("ver_rotAC: " + this.ver_rotAc + " ver_rotSpeed: " + this.ver_rotSpeed);
+		//console.log("ver_rotAC: " + this.ver_rotAc + " ver_rotSpeed: " + this.ver_rotSpeed);
 	}
 	this.ver_angle += this.ver_rotSpeed;
 	
@@ -353,16 +353,16 @@ MySubmarine.prototype.update = function(currTime){
 	
 	if(this.moveDown && !this.moveUp){
 		this.hor_rotSpeed += this.hor_rotAc;
-		console.log("hor_rotAC: " + this.hor_rotAc + " hor_rotSpeed: " + this.hor_rotSpeed);
+		//console.log("hor_rotAC: " + this.hor_rotAc + " hor_rotSpeed: " + this.hor_rotSpeed);
 	}
 	else if(this.moveUp && !this.moveDown){
 		this.hor_rotSpeed -= this.hor_rotAc;
-		console.log("hor_rotAC: " + this.hor_rotAc + " hor_rotSpeed: " + this.hor_rotSpeed);
+		//console.log("hor_rotAC: " + this.hor_rotAc + " hor_rotSpeed: " + this.hor_rotSpeed);
 	}
 	else if(this.moveUp && this.moveDown){
 		this.hor_rotSpeed += this.hor_rotAc;
 		this.hor_rotSpeed -= this.hor_rotAc;
-		console.log("hor_rotAC: " + this.ver_rotAc + " hor_rotSpeed: " + this.ver_rotSpeed);
+		//console.log("hor_rotAC: " + this.ver_rotAc + " hor_rotSpeed: " + this.ver_rotSpeed);
 	}
 	
 	this.hor_angle+=this.hor_rotSpeed;
