@@ -25,9 +25,6 @@ MyTorpedo.prototype = Object.create(CGFobject.prototype);
 MyTorpedo.prototype.constructor = MyTriangle;
 MyTorpedo.prototype.display = function() {
 	this.scene.submarineAppearances[this.scene.currSubmarineAppearance].apply();
-	this.scene.translate(this.x,this.y,this.z);
-	this.scene.rotate(this.ver_angle,0, 1, 0);
-	this.scene.rotate(this.hor_angle,1, 0, 0);
 	
 	//Torpedo Display
 	//Back Hemisphere
@@ -66,6 +63,9 @@ MyTorpedo.prototype.display = function() {
 	 		this.flipper.display();
 	 	this.scene.popMatrix();
  	this.scene.popMatrix();
+	this.scene.translate(this.x,this.y,this.z);
+	this.scene.rotate(this.ver_angle,0, 1, 0);
+	this.scene.rotate(this.hor_angle,1, 0, 0);
 	
 };
 MyTorpedo.prototype.launch = function(){
