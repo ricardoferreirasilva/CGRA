@@ -392,7 +392,7 @@ MySubmarine.prototype.update = function(currTime){
 	
 	
 	//Movement Update
-	console.log(this.hor_angle);
+	//console.log(this.hor_angle);
 	this.z += Math.cos(this.ver_angle) * (this.speed*dt/1000);
 	this.x += Math.sin(this.ver_angle) * (this.speed*dt/1000);
 	this.y -= Math.sin(this.hor_angle) * (this.speed *dt/ 1000);
@@ -434,5 +434,5 @@ MySubmarine.prototype.periscopeDown = function(){
 };
 
 MySubmarine.prototype.torpedoLockTarget = function(){
-	this.scene.showTorpedo=true;
+	this.scene.launchTorpedo();
 };

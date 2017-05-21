@@ -24,6 +24,7 @@ serialInclude([
 	'MyTorpedo.js',
 	'MySubmarine.js',
 	'MyTarget.js',
+	'MySpawnTorpedo.js',
 
 	main=function() {
 		var app = new CGFapplication(document.body);

@@ -172,10 +172,8 @@ MyInterface.prototype.processKeyUp = function(event) {
 		this.scene.submarine.handleKeyUp('down');
 		break;
 	case (102)://F - lauch torpedo
-		this.scene.torpedo.launch();
 		break;
 	case (70)://F - launch torpedo
-		this.scene.torpedo.launch();
 		break;
 	};
 };

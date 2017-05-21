@@ -37,7 +37,7 @@ LightingScene.prototype.init = function(application) {
     this.pointer = new MyPointer(this,1);
     this.clock = new MyClock(this, 12, 1);
     this.submarine = new MySubmarine(this);
-    this.torpedo= new MyTorpedo(this);
+    this.torpedo;
     this.showTorpedo=false;
     this.background = new MyCylinder(this, 8,20);
     
@@ -328,7 +328,7 @@ LightingScene.prototype.display = function() {
 	
 	//Torpedo
 	this.pushMatrix();
-		if(this.showTorpedo)
+		if(this.torpedo != null)
 			this.torpedo.display();
 	this.popMatrix();
    	
@@ -351,7 +351,7 @@ LightingScene.prototype.update = function(currTime)
         this.cFrame++;
 	}
     this.submarine.update(currTime);
-	this.torpedo.update(currTime);
+	if(this.torpedo != null) this.torpedo.update(currTime);
 	
 	//GUI Appearance choice    
     switch (this.submarineAppearance) {
@@ -378,3 +378,11 @@ LightingScene.prototype.update = function(currTime)
     	break;
     }
 }
+LightingScene.prototype.launchTorpedo = function()
+{
+    this.torpedo = new MySpawnTorpedo(this,this.submarine.x,this.submarine.y,this.submarine.z, this.submarine.hor_angle, this.submarine.ver_angle);
+    console.log("TOR: " + this.torpedo.x + " " +  this.torpedo.y + " " +  this.torpedo.z + " ");
+    console.log("SUB: " + this.submarine.x + " " +  this.submarine.y + " " +  this.submarine.z + " ");
+    //this.showTorpedo = true;
+}
+

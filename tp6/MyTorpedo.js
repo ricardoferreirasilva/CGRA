@@ -3,13 +3,13 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function MyTorpedo(scene) {
+function MyTorpedo(scene,x,y,z, hor_angle, ver_angle) {
     CGFobject.call(this, scene);
-    this.x=0;
-    this.z=0;
-    this.y=0;
-    this.ver_angle=0;
-    this.hor_angle=0;
+    this.x=x;
+    this.z=z;
+    this.y=y;
+    this.ver_angle=ver_angle;
+    this.hor_angle=hor_angle;
     
     this.triangle= new MyTriangle(scene);
     this.hemisphere= new MyHemiSphere(scene,20,8);
@@ -92,7 +92,7 @@ MyTorpedo.prototype.update = function(currTime){
 		var realX = subX + this.x;
 		var realY = subY + this.y
 		var realZ = subZ + this.z;
-		console.log("TOR: "+realX+" "+realY + " "+realZ);
+		//console.log("TOR: "+realX+" "+realY + " "+realZ);
 
 		this.z += ((Math.sin(90) * 5*dt/1000) - (Math.sin(90) * subSpeed*dt/1000));
 	}
