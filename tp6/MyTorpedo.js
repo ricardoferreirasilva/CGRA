@@ -9,6 +9,10 @@ function MyTorpedo(scene,x,y,z, hor_angle, ver_angle) {
     this.z=z;
     this.y=y;
     
+    this.startx=x;
+    this.starty=y;
+    this.startz=z;
+    
     this.ver_angle=ver_angle;
     this.hor_angle=hor_angle;
     
@@ -40,7 +44,6 @@ MyTorpedo.prototype = Object.create(CGFobject.prototype);
 MyTorpedo.prototype.constructor = MyTriangle;
 MyTorpedo.prototype.display = function() {
 	this.scene.submarineAppearances[this.scene.currSubmarineAppearance].apply();
-	
 	//Torpedo Display
 	//Back Hemisphere
 	this.scene.pushMatrix();
@@ -88,8 +91,8 @@ MyTorpedo.prototype.calculateBenzierPoints = function(tX,tY,tZ){
 	if(!this.benzierCalculated)
 	{
 		console.log("T "+tX+" "+tY+" "+tZ);
-		this.p1 = {x: this.x,y:this.y,z:this.z};
-		this.p2 = { x: this.x+6*Math.cos(this.ver_angle)*Math.sin(this.hor_angle) , y: this.y-6*Math.sin (this.ver_angle), z: this.z+6*Math.cos(this.ver_angle)*Math.cos(this.hor_angle)};
+		this.p1 = {x: this.startx,y:this.starty,z:this.startz};
+		this.p2 = { x: this.startx+6*Math.cos(this.ver_angle)*Math.sin(this.hor_angle) , y: this.starty-6*Math.sin (this.ver_angle), z: this.startz+6*Math.cos(this.ver_angle)*Math.cos(this.hor_angle)};
 		this.p3 = {x: tX,y:tY+3,z:tZ};
 		this.p4 = {x: tX,y:tY,z:tZ};
 		this.benzierT = 0;
