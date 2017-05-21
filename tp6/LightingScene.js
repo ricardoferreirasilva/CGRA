@@ -37,7 +37,9 @@ LightingScene.prototype.init = function(application) {
     this.pointer = new MyPointer(this,1);
     this.clock = new MyClock(this, 12, 1);
     this.submarine = new MySubmarine(this);
-    this.background = new MyCylinder(this, 20,8);
+    this.torpedo= new MyTorpedo(this);
+    this.showTorpedo=false;
+    this.background = new MyCylinder(this, 8,20);
     
     //targets
     this.homer_target = new MyTarget(this,1,0.5,1);
@@ -173,6 +175,13 @@ LightingScene.prototype.init = function(application) {
 	this.naperonAppearence.setSpecular(1, 1, 1, 0.3);
 	this.naperonAppearence.setShininess(50);
     this.naperonAppearence.loadTexture("../tp6/naperon.png");
+    
+    this.oceanAppearence= new CGFappearance(this);
+    this.oceanAppearence.setAmbient(1, 1, 1, 0.1);
+	this.oceanAppearence.setDiffuse(1,1, 1, 0.2);
+	this.oceanAppearence.setSpecular(1, 1, 1, 0.3);
+	this.oceanAppearence.setShininess(100);
+    this.oceanAppearence.loadTexture("../tp6/ocean.jpg");
 
     this.submarineAppearance = this.materialDefault;
     this.submarineAppearances=[];
@@ -316,11 +325,20 @@ LightingScene.prototype.display = function() {
 			this.targets[i].display();
 		this.popMatrix();
 	}
+	
+	//Torpedo
+	this.pushMatrix();
+		if(this.showTorpedo)
+			this.torpedo.display();
+	this.popMatrix();
    	
    	/*
    	//BackGround
    	this.pushMatrix();
-   		this.scale(100,100,100);
+   		this.oceanAppearence.apply();
+   		this.scale(100,500,100);
+   		this.rotate(90 * degToRad,1, 0, 0);
+   		this.translate(0,0,-0.5);
    		this.background.display();
    	this.popMatrix();*/
     // ---- END Primitive drawing section
@@ -332,7 +350,9 @@ LightingScene.prototype.update = function(currTime)
 		this.clock.update(currTime);
         this.cFrame++;
 	}
-   this.submarine.update(currTime);
+    this.submarine.update(currTime);
+	this.torpedo.update(currTime);
+	
 	//GUI Appearance choice    
     switch (this.submarineAppearance) {
     case "standard":

@@ -47,7 +47,6 @@ function MySubmarine(scene) {
 	this.moveBack=false;
 	this.moveUp=false;
 	this.moveDown=false;
-	this.showTorpedo=false;
     
     this.triangle= new MyTriangle(scene);
     this.hemisphere= new MyHemiSphere(scene,20,8);
@@ -56,7 +55,7 @@ function MySubmarine(scene) {
     this.circle = new MyCircle(scene, 20);
     this.flipper= new MyFlipper(scene);
     this.proppeller= new MyProppeller(scene);
-    this.torpedo= new MyTorpedo(scene);
+    
     
     this.triangle.initBuffers();
 };
@@ -189,7 +188,7 @@ MySubmarine.prototype.display = function() {
  	if(this.showTorpedo)
 	 {
 
-		this.torpedo.display();
+		this.scene.torpedo.display();
 	 }
 };
 
@@ -300,8 +299,6 @@ MySubmarine.prototype.handleKeyUp = function(direction) {
 }
 
 MySubmarine.prototype.update = function(currTime){
-
-	this.torpedo.update(currTime);
 	this.lastime = this.lastime || currTime;
  	var dt = currTime - this.lastime;
 	this.lastime = currTime;
@@ -437,5 +434,5 @@ MySubmarine.prototype.periscopeDown = function(){
 };
 
 MySubmarine.prototype.torpedoLockTarget = function(){
-	this.showTorpedo=true;
+	this.scene.showTorpedo=true;
 };
