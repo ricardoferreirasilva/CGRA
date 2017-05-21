@@ -30,46 +30,43 @@ MyTorpedo.prototype.display = function() {
 	this.scene.rotate(this.hor_angle,1, 0, 0);
 	
 	//Torpedo Display
+	//Back Hemisphere
 	this.scene.pushMatrix();
+		this.scene.translate(2.04,-0.7,0);
+		this.scene.scale(0.25,0.25,0.25);	
 		this.scene.pushMatrix();
-			this.scene.translate(0,-0.7,2.04);
-			this.scene.scale(0.25,0.25,0.25);		
-			//Back Hemisphere
-			this.scene.pushMatrix();
-				this.scene.scale(0.5*0.92,0.5*0.92,0.5*0.92);
-				this.scene.rotate(180 * degToRad,0, 1, 0);
-				this.hemisphere.display();
-			this.scene.popMatrix();	
-			//Cylinder (Body)
-			this.scene.pushMatrix();
-				this.scene.scale(0.5*0.92,0.5*0.92,4.08);
-				this.cylinder.display();
-			this.scene.popMatrix();
-			//front Hemisphere
-			this.scene.pushMatrix();
-				this.scene.scale(0.5*0.92,0.5*0.92,0.5*0.92);
-				this.scene.translate(0,0,8.85);
-				this.hemisphere.display();
-			this.scene.popMatrix();	
-		this.scene.popMatrix();
+			this.scene.scale(0.5*0.92,0.5*0.92,0.5*0.92);
+			this.scene.rotate(-90 * degToRad,0, 1, 0);
+			this.hemisphere.display();
+		this.scene.popMatrix();	
+		//Cylinder (Body)
 		
-		 //Back Flippers
-	    this.scene.pushMatrix();
-	    	this.scene.translate(0,-0.7,2.04);
-	    	this.scene.scale(0.2,0.2,0.2);
-	    	this.scene.translate(0,0,0.15);
-	    	this.scene.rotate(180 * degToRad,1, 0, 0);
-	    	this.scene.rotate(90 * degToRad,0, 1, 0);
-	    	this.scene.pushMatrix();
-		 		this.flipper.display();
-		 	this.scene.popMatrix();
-		 		
-		 	this.scene.pushMatrix();
-		 		this.scene.rotate(90 * degToRad,1,0, 0);
-		 		this.flipper.display();
-		 	this.scene.popMatrix();
-	 	this.scene.popMatrix(); 
-	this.scene.popMatrix();
+		this.scene.pushMatrix();
+			this.scene.rotate(90 * degToRad,0, 1, 0);
+			this.scene.scale(0.5*0.92,0.5*0.92,4.08);
+			this.cylinder.display();
+		this.scene.popMatrix();
+		//front Hemisphere
+		this.scene.pushMatrix();
+			this.scene.rotate(90 * degToRad,0, 1, 0);
+			this.scene.scale(0.5*0.92,0.5*0.92,0.5*0.92);
+			this.scene.translate(0,0,8.85);
+			this.hemisphere.display();
+		this.scene.popMatrix();	
+		this.scene.translate(0.15,0,0);
+		this.scene.rotate(180 * degToRad,1, 0, 0);
+		//BackFlippers
+		this.scene.scale(0.75,0.75,0.75);
+		this.scene.pushMatrix();
+	 		this.flipper.display();
+	 	this.scene.popMatrix();
+	 		
+	 	this.scene.pushMatrix();
+	 		this.scene.rotate(90 * degToRad,1,0, 0);
+	 		this.flipper.display();
+	 	this.scene.popMatrix();
+ 	this.scene.popMatrix();
+	
 };
 MyTorpedo.prototype.launch = function(){
 	this.hasLaunched = true;
