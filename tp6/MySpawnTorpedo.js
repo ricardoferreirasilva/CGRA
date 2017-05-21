@@ -20,7 +20,8 @@ MySpawnTorpedo.prototype = Object.create(CGFobject.prototype);
 MySpawnTorpedo.prototype.constructor = MyTriangle;
 MySpawnTorpedo.prototype.display = function() {
 	 this.scene.pushMatrix();
-        this.scene.translate(this.torpedo.x, this.torpedo.y, this.torpedo.z);
+     	this.scene.scale(1,1,1);
+        this.scene.translate(this.torpedo.x, this.torpedo.y, -this.torpedo.z);
         this.scene.rotate(this.torpedo.ver_angle,0, 1, 0);
 	    this.scene.rotate(this.torpedo.hor_angle,1, 0, 0);
 	
