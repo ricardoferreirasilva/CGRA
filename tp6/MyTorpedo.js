@@ -90,6 +90,7 @@ MyTorpedo.prototype.launch = function(){
 MyTorpedo.prototype.calculateBenzierPoints = function(tX,tY,tZ){
 	if(!this.benzierCalculated)
 	{
+		console.log("T "+tX+" "+tY+" "+tZ);
 		this.p1 = {x: this.x,y:this.y,z:this.z};
 		this.p2 = { x: this.x+6*Math.cos(this.ver_angle)*Math.sin(this.hor_angle) , y: this.y-6*Math.sin (this.ver_angle), z: this.z+6*Math.cos(this.ver_angle)*Math.cos(this.hor_angle)};
 		this.p3 = {x: tX,y:tY+3,z:tZ};
@@ -107,7 +108,7 @@ MyTorpedo.prototype.update = function(currTime){
 	this.lastime = currTime;
 	if(this.hasLaunched && this.benzierCalculated)
 	{
-		console.log("TIME: "+this.lastime);
+		//console.log("TIME: "+this.lastime);
 		//this.benzierT +=  1/(1000/dt * this.benzierDistance);
 		this.benzierT += 0.002
 
@@ -122,7 +123,7 @@ MyTorpedo.prototype.update = function(currTime){
 		
 		if(this.benzierT < 1)
 		{
-			console.log(newX + " " + newY + " " + newZ);
+				//console.log(newX + " " + newY + " " + newZ);
 				this.x = newX;
 				this.y = newX;
 				this.z = newX;

@@ -5,7 +5,7 @@
  */
 
 //Receive this from submarine
-function MySpawnTorpedo(scene,x,y,z, hor_angle, ver_angle,tX,tY,tZ) {
+function MySpawnTorpedo(scene,x,y,z, hor_angle, ver_angle) {
     CGFobject.call(this, scene);
     this.x=x;
     this.z=z;
@@ -21,13 +21,12 @@ MySpawnTorpedo.prototype.display = function() {
        //this.scene.translate(this.x,this.y,this.z);
 	 this.scene.pushMatrix();
 
-        this.scene.translate(this.torpedo.x, this.torpedo.y, -this.torpedo.z);
+        this.scene.translate(this.torpedo.x, this.torpedo.y, this.torpedo.z);
         this.scene.rotate(this.torpedo.ver_angle,0, 1, 0);
 	    this.scene.rotate(this.torpedo.hor_angle,1, 0, 0);
 	
-        //this.scene.rotate(Math.PI+this.torpedo.getHBezier(), 0, 1, 0);
-        //this.scene.rotate(this.torpedo.getVBezier(), 1, 0, 0);
-        this.torpedo.calculateBenzierPoints(10,0,10);
+       
+        
         this.torpedo.display();
     this.scene.popMatrix();
 	

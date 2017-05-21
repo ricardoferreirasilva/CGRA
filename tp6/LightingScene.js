@@ -41,6 +41,7 @@ LightingScene.prototype.init = function(application) {
     this.torpedoStock = [];
     this.showTorpedo=false;
     this.background = new MyCylinder(this, 8,20);
+
     
     //targets
     this.homer_target = new MyTarget(this,1,0.5,1);
@@ -54,11 +55,15 @@ LightingScene.prototype.init = function(application) {
     this.sponge_target= new MyTarget(this, 1,0.5,4);
     this.sponge_target.appearence=4;
     this.targets=[];
-    this.targets[0]=this.homer_target;
-    this.targets[1]=this.bullseye_target;
-    this.targets[2]=this.naperon_target;
-    this.targets[3]=this.metal_target;
-    this.targets[4]=this.sponge_target;
+    this.targets.push(this.homer_target);
+    this.targets.push(this.bullseye_target);
+    this.targets.push(this.naperon_target);
+    this.targets.push(this.metal_target);
+    this.targets.push(this.sponge_target);
+    this.targetCounter = 0;
+    this.currentTargetX;
+    this.currentTargetY;
+    this.currentTargetZ;
     
     // Materials
     this.materialDefault = new CGFappearance(this);
@@ -331,9 +336,20 @@ LightingScene.prototype.display = function() {
 	this.pushMatrix();
 		if(this.torpedo != null)
 			this.torpedo.display();
+        
+        var c = 0;
         for(var i=0;i<this.torpedoStock.length;i++)
         {
-            if(this.torpedoStock[i]!= null) this.torpedoStock[i].display();
+            if(this.torpedoStock[i] != null) 
+            {
+                if(c >= this.targets.length) c=0;
+                this.currentTargetX = this.targets[c].x; 
+                this.currentTargetY = this.targets[c].y;
+                this.currentTargetZ = this.targets[c].z;
+                c++;
+                this.torpedoStock[i].torpedo.calculateBenzierPoints( this.currentTargetX, this.currentTargetY, this.currentTargetZ);
+                this.torpedoStock[i].display();
+            }
         }
 	this.popMatrix();
    	
@@ -393,8 +409,9 @@ LightingScene.prototype.launchTorpedo = function()
     //this.torpedo = new MySpawnTorpedo(this,this.submarine.x,this.submarine.y,this.submarine.z, this.submarine.hor_angle, this.submarine.ver_angle);
     //console.log("TOR: " + this.torpedo.x + " " +  this.torpedo.y + " " +  this.torpedo.z + " ");
     //sconsole.log("SUB: " + this.submarine.x + " " +  this.submarine.y + " " +  this.submarine.z + " ");
-    this.torpedoStock.push(new MySpawnTorpedo(this,this.submarine.x,this.submarine.y,this.submarine.z, this.submarine.hor_angle, this.submarine.ver_angle,10,10,0));
-    console.log(this.torpedoStock.length);
-    //this.showTorpedo = true;
+        console.log(this.targets.length + " L");
+        this.torpedoStock.push(new MySpawnTorpedo(this,this.submarine.x,this.submarine.y,this.submarine.z, this.submarine.hor_angle, this.submarine.ver_angle));
+        console.log(this.torpedoStock.length);
+    //this.showTorpedo = true
 }
 
