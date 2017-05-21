@@ -112,21 +112,33 @@ MyTorpedo.prototype.update = function(currTime){
 		//this.benzierT +=  1/(1000/dt * this.benzierDistance);
 		this.benzierT += 0.002
 
-		var newX = (this.p1.x * Math.pow((1-this.benzierT),3)) + (this.p2.x* 3*this.benzierT*Math.pow((1-this.benzierT),2) + (this.p3.x * 3 * Math.pow(this.benzierT,2)*(1-this.benzierT))+(this.p4.x * Math.pow(this.benzierT,3)));
-		var newY = (this.p1.y * Math.pow((1-this.benzierT),3)) + (this.p2.y* 3*this.benzierT*Math.pow((1-this.benzierT),2) + (this.p3.y * 3 * Math.pow(this.benzierT,2)*(1-this.benzierT))+(this.p4.y * Math.pow(this.benzierT,3)));
-		var newZ = (this.p1.z * Math.pow((1-this.benzierT),3)) + (this.p2.z* 3*this.benzierT*Math.pow((1-this.benzierT),2) + (this.p3.z * 3 * Math.pow(this.benzierT,2)*(1-this.benzierT))+(this.p4.z * Math.pow(this.benzierT,3)));
+		var newX = (Math.pow((1-this.benzierT),3)*this.p1.x) + (3*Math.pow((1-this.benzierT),2)*this.benzierT*this.p2.x) + (3*(1-this.benzierT)*Math.pow(this.benzierT,2)*this.p3.x) + (Math.pow(this.benzierT,3)*this.p3.x);
+		var newY = (Math.pow((1-this.benzierT),3)*this.p1.y) + (3*Math.pow((1-this.benzierT),2)*this.benzierT*this.p2.y) + (3*(1-this.benzierT)*Math.pow(this.benzierT,2)*this.p3.y) + (Math.pow(this.benzierT,3)*this.p3.y);
+		var newZ = (Math.pow((1-this.benzierT),3)*this.p1.z) + (3*Math.pow((1-this.benzierT),2)*this.benzierT*this.p2.z) + (3*(1-this.benzierT)*Math.pow(this.benzierT,2)*this.p3.x) + (Math.pow(this.benzierT,3)*this.p3.z);
 
 		this.deltadis = {x : (this.x-newX), y: (this.y-newY), z: (this.z-newZ)};
 		
 		this.hor_bezier = Math.atan2(this.deltadis.x, this.deltadis.z);
 		this.ver_bezier = Math.atan2(Math.abs(this.deltadis.y), Math.abs(this.deltadis.z));
 		
-		if(this.benzierT < 1)
+		if(this.benzierT == 0)
+		{
+				this.x = this.p1.x;
+				this.y = this.p1.y;
+				this.z = this.p1.z;
+		}
+		else if(this.benzierT < 1)
 		{
 				//console.log(newX + " " + newY + " " + newZ);
 				this.x = newX;
 				this.y = newX;
 				this.z = newX;
+		}
+		else if(this.benzierT == 1)
+		{
+				this.x = this.p4.x;
+				this.y = this.p4.y;
+				this.z = this.p4.z;
 		}
 	}
 
